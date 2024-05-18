@@ -12,7 +12,8 @@ const IndicatorTypeRouter = require('../router/indicator.type.router.js');
 const UnitsConfigRouter = require('../router/units.config.router.js');
 
 app.get('/', (req, res) => {
-    res.send('Hello! This is Express.');
+    //Cambiar cuando se esté empezando a desarrollar la app.
+    res.send(res.redirect('/api/health'));
 });
 app.use(morgan('dev'));
 app.use(express.json());
