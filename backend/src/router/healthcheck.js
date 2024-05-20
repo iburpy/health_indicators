@@ -1,4 +1,5 @@
-const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
 
 router.get('/health', (req, res) => {
     const formattedDate = new Date( new Date().toUTCString() ).toLocaleString()

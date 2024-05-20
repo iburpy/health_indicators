@@ -1,5 +1,6 @@
-const router = require('express').Router();
 const express = require('express');
+const router = express.Router();
+
 const { 
     getUnits, 
     getUnitById,
@@ -12,8 +13,8 @@ router.use(express.json({ prettyPrint: true }));
 
 router.get('/units', getUnits);
 router.get('/units/:id', getUnitById);
-router.post('/create/units', createUnit);
-router.put('/edit/units/:id', updateUnit);
-router.delete('/delete/units/:id', deleteUnit);
+router.post('/units/create', createUnit);
+router.put('/units/edit/:id', updateUnit);
+router.delete('/units/delete/:id', deleteUnit);
 
 module.exports = router;

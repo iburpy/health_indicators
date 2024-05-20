@@ -9,10 +9,12 @@ const {
     deleteIndicator
 } = require('../controllers/indicator.controller.js');
 
+router.use(express.json());
+
 router.get('/indicators', getIndicators);
 router.get('/indicators/:id', getIndicatorById);
-router.post('/create/indicators', createIndicator);
-router.put('/edit/indicators/:id', updateIndicator);
-router.delete('/delete/indicators/:id', deleteIndicator);
+router.post('/indicators/create', createIndicator);
+router.put('/indicators/edit/:id', updateIndicator);
+router.delete('/indicators/edit/:id', deleteIndicator);
 
 module.exports = router;

@@ -46,6 +46,10 @@ ContactoEmergencia.init({
     type: DataTypes.STRING(100),
     allowNull: false
   },
+  generos_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
   telefono: {
     type: DataTypes.STRING(45),
     allowNull: false
@@ -260,6 +264,9 @@ Usuario.belongsTo(Genero, { foreignKey: 'generos_id' });
 
 Usuario.hasOne(ContactoEmergencia, { foreignKey: 'num_doc' });
 ContactoEmergencia.belongsTo(Usuario, { foreignKey: 'num_doc' });
+
+Genero.hasMany(ContactoEmergencia, { foreignKey: 'generos_id' });
+ContactoEmergencia.belongsTo(Genero, { foreignKey: 'generos_id' });
 
 UnidadMedida.hasOne(Usuario, { foreignKey: 'unidades_medida_id' });
 Usuario.belongsTo(UnidadMedida, { foreignKey: 'unidades_medida_id' });

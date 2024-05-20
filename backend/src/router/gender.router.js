@@ -1,5 +1,6 @@
-const router = require('express').Router();
 const express = require('express');
+const router = express.Router();
+
 const { 
         getGenders, 
         getGenderById,
@@ -9,7 +10,7 @@ const {
 
     } = require('../controllers/gender.controller.js');
 
-router.use(express.json({ prettyPrint: true }));
+router.use(express.json());
 
 router.get('/genders', getGenders);
 router.get('/genders/:id', getGenderById);

@@ -1,4 +1,5 @@
-const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
 
 const {
     getHealthGoals,
@@ -7,6 +8,8 @@ const {
     updateHealthGoal,
     deleteHealthGoal
 } = require('../controllers/health.goal.controller.js');
+
+router.use(express.json());
 
 router.get('/goals', getHealthGoals);
 router.get('/goals/:id', getHealthGoalById);
