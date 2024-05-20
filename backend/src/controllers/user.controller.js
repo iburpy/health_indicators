@@ -1,7 +1,16 @@
-const { Usuario, Genero, ContactoEmergencia, UnidadMedida } = require('../model/models.js'); // Asegúrate de importar tus modelos
+const { 
+    Usuario,
+    Genero,
+    ContactoEmergencia,
+    UnidadMedida 
+} = require('../model/models.js');
+
+const bcrypt = require('bcryptjs');
+const { createAccessToken } = require('../libs/jwt.js');
 
 const register = async (req, res) => {
     try {
+
         const {
             num_doc,
             nombre,
@@ -16,7 +25,7 @@ const register = async (req, res) => {
             unidades_medida
         } = req.body;
 
-        console.log(req.body);
+        const hashPass = await bcrypt.hash(password, 10);
 
         // Validar que los campos requeridos estén presentes
         if (!num_doc || !nombre || !apellido || !fecha_de_nacimiento || !generos_id || !email || !password || !altura || !peso || !contacto_emergencia || !unidades_medida) {
@@ -53,6 +62,7 @@ const register = async (req, res) => {
             unitsConfig = await UnidadMedida.create(unidades_medida);
         }
 
+
         // Crear el usuario
         const newUser = await Usuario.create({
             num_doc,
@@ -61,14 +71,38 @@ const register = async (req, res) => {
             fecha_de_nacimiento,
             generos_id,
             email,
-            password,
+            password: hashPass,
             altura,
             peso,
             contacto_emergencia_num_doc: emergencyContact.num_doc,
             unidades_medida_id: unitsConfig.id
         });
 
-        res.status(201).send(JSON.stringify(newUser), null, 2);
+        const token = await createAccessToken({ num_doc: newUser.num_doc });
+        res.cookie('token', token);
+        
+        const response = {
+            num_doc: newUser.num_doc,
+            nombre_completo: `${newUser.nombre} ${newUser.apellido}`,
+            genero: genero.nombre,
+            email: newUser.email,
+            fecha_de_nacimiento: newUser.fecha_de_nacimiento,
+            altura: `${newUser.altura} ${unitsConfig.unidad_longitud}`,
+            peso: `${newUser.peso} ${unitsConfig.unidad_peso}`,
+            contacto_emergencia: {
+                    num_doc: newUser.contacto_emergencia_num_doc,
+                    nombre_completo: emergencyContact.nombre_completo,
+                    email: emergencyContact.email,
+                    fecha_de_nacimiento: emergencyContact.fecha_de_nacimiento,
+                    genero: genero.nombre,
+                    parentesco: emergencyContact.parentesco,
+                    relacion: emergencyContact.relacion,
+                    telefono: emergencyContact.telefono
+                },
+            unidades_medida: unitsConfig
+            }
+
+        res.status(201).send(JSON.stringify({response, token}), null, 2);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error al registrar el usuario', error: error.message });
@@ -203,10 +237,10 @@ const deleteProfile = async (req, res) => {
 };
 
 module.exports = {
+    register,
+    login,
     getUsers,
     getProfile,
     editProfile,
-    deleteProfile,
-    register,
-    login
+    deleteProfile   
 }
