@@ -133,11 +133,12 @@ const login = async (req, res) => {
     }
 
     const token = await createAccessToken({ num_doc: userFound.num_doc });
-    res.cookie("token", token);
+    res.cookie('token', token);
 
     res.json({
       num_doc: userFound.num_doc,
       email: userFound.email,
+      token
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
