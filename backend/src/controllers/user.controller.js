@@ -158,6 +158,17 @@ const login = async (req, res) => {
     }
 };
 
+const testBcrypt = async () => {
+  const password = 'hola';
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  console.log(`Original password: ${password}`);
+  console.log(`Hashed password: ${hashedPassword}`);
+
+  const isMatch = await bcrypt.compare(password, hashedPassword);
+  console.log(`Password comparison result: ${isMatch}`);
+};
+
+testBcrypt();
 
 const getUsers = async (req, res) => {
     try {
@@ -242,6 +253,7 @@ const deleteProfile = async (req, res) => {
 module.exports = {
     register,
     login,
+    testBcrypt,
     getUsers,
     getProfile,
     editProfile,
