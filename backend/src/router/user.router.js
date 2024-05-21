@@ -12,8 +12,8 @@ const {
 
 router.use(express.json());
 
-router.post('/login', login)
 router.post('/register', register)
+router.post('/login', login)
 
 router.get('/users', getUsers);
 router.get('/profile/:id', getProfile);

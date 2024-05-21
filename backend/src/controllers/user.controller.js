@@ -6,6 +6,7 @@ const {
 } = require('../model/models.js');
 
 const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const { createAccessToken } = require('../libs/jwt.js');
 
 const register = async (req, res) => {
@@ -26,7 +27,7 @@ const register = async (req, res) => {
         } = req.body;
 
         
-        const hashPass = await bcrypt.hash(password, 10);
+        const hashPass = await bcrypt.hash(password, saltRounds);
 
         // Validar que los campos requeridos estén presentes
         if (!num_doc || !nombre || !apellido || !fecha_de_nacimiento || !generos_id || !email || !password || !altura || !peso || !contacto_emergencia || !unidades_medida) {
@@ -87,6 +88,7 @@ const register = async (req, res) => {
             nombre_completo: `${newUser.nombre} ${newUser.apellido}`,
             genero: genero.nombre,
             email: newUser.email,
+            password: newUser.password,
             fecha_de_nacimiento: newUser.fecha_de_nacimiento,
             altura: `${newUser.altura} ${unitsConfig.unidad_longitud}`,
             peso: `${newUser.peso} ${unitsConfig.unidad_peso}`,
@@ -111,39 +113,51 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const userFound = await Usuario.findOne({ where: { email } });
+    try {
+        const { email, password } = req.body;
 
-    if (!userFound)
-      return res.status(400).json({
-        message: "El correo electrónico no existe"
-      });
+        if (!email || !password) {
+            return res.status(400).json({
+                message: "Invalid email or password"
+            });
+        }
 
-    console.log('Contraseña proporcionada:', password);
-    console.log('Contraseña de la base de datos:', userFound.password);
+        const userFound = await Usuario.findOne({ where: { email } });
 
-    const isMatch = await bcrypt.compare(password, userFound.password);
-    console.log('Resultado de la comparación de contraseñas:', isMatch);
+        if (!userFound) {
+            return res.status(400).json({
+                message: "User not found"
+            });
+        }
 
-    if (!isMatch) {
-      return res.status(400).json({
-        message: "La contraseña es incorrecta"
-      });
+        console.log(`Password provided: ${password}`);
+        console.log(`Password from the database: ${userFound.password}`);
+
+        const isMatch = await bcrypt.compare(password, userFound.password);
+        console.log(`Password comparison result: ${isMatch}`);
+
+        const token = await createAccessToken({ num_doc: userFound.num_doc, email: userFound.email });
+        res.cookie('token', token, { httpOnly: true, secure: true });
+
+        if (!isMatch) {
+            return res.status(400).json({
+                message: "Passwords did not match",
+                providedPassword: password,
+                hashedPassword: userFound.password,
+                token
+            });
+        }
+
+        res.json({
+            num_doc: userFound.num_doc,
+            email: userFound.email,
+            token
+        })
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
     }
-
-    const token = await createAccessToken({ num_doc: userFound.num_doc });
-    res.cookie('token', token);
-
-    res.json({
-      num_doc: userFound.num_doc,
-      email: userFound.email,
-      token
-    });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
 };
+
 
 const getUsers = async (req, res) => {
     try {
