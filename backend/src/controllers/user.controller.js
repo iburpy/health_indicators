@@ -253,7 +253,6 @@ const deleteProfile = async (req, res) => {
 module.exports = {
     register,
     login,
-    testBcrypt,
     getUsers,
     getProfile,
     editProfile,

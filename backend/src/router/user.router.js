@@ -4,7 +4,6 @@ const router = express.Router();
 const {
     login,
     register,
-    testBcrypt,
     getUsers,
     getProfile,
     editProfile,
@@ -15,7 +14,6 @@ router.use(express.json());
 
 router.post('/register', register);
 router.post('/login', login);
-router.post('/test', testBcrypt);
 router.get('/users', getUsers);
 router.get('/profile/:id', getProfile);
 router.put('/profile/edit/:id', editProfile);
