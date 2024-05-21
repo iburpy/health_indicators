@@ -5,7 +5,7 @@ const {
     UnidadMedida 
 } = require('../model/models.js');
 
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const { createAccessToken } = require('../libs/jwt.js');
 
 const register = async (req, res) => {
@@ -25,6 +25,7 @@ const register = async (req, res) => {
             unidades_medida
         } = req.body;
 
+        
         const hashPass = await bcrypt.hash(password, 10);
 
         // Validar que los campos requeridos estén presentes
@@ -110,51 +111,38 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const user = await Usuario.findOne({ where: { email, password } });
-        if (!user) {
-            return res.status(401).json({ message: 'Credenciales inválidas' });
-        }
+  try {
+    const { email, password } = req.body;
+    const userFound = await Usuario.findOne({ where: { email } });
 
-        const gender = await Genero.findByPk(user.generos_id);
-        const emergencyContact = await ContactoEmergencia.findByPk(user.contacto_emergencia_num_doc);
-        const unitsConfig = await UnidadMedida.findByPk(user.unidades_medida_id);
+    if (!userFound)
+      return res.status(400).json({
+        message: "El correo electrónico no existe"
+      });
 
-        const response = {
-            num_doc: user.num_doc,
-            nombre_completo: `${user.nombre} ${user.apellido}`,
-            genero: gender.nombre,
-            email: user.email,
-            fecha_de_nacimiento: user.fecha_de_nacimiento,
+    console.log('Contraseña proporcionada:', password);
+    console.log('Contraseña de la base de datos:', userFound.password);
 
-            altura: `${user.altura} ${unitsConfig.unidad_longitud}`,
-            peso: `${user.peso} ${unitsConfig.unidad_peso}`,
+    const isMatch = await bcrypt.compare(password, userFound.password);
+    console.log('Resultado de la comparación de contraseñas:', isMatch);
 
-            contacto_emergencia: {
-                num_doc: emergencyContact.num_doc,
-                nombre: emergencyContact.nombre_completo,
-                parentesco: emergencyContact.parentesco,
-                genero: emergencyContact.nombre,
-                telefono: emergencyContact.telefono
-            },
-            config_unidades: {
-                longitud: unitsConfig.unidad_longitud,
-                peso: unitsConfig.unidad_peso,
-                presion_arterial: unitsConfig.unidad_presion_arterial,
-                glucosa_sangre: unitsConfig.unidad_glucosa_sangre,
-                frecuencia_cardiaca: unitsConfig.unidad_frecuencia_cardiaca,
-                temperatura: unitsConfig.unidad_temperatura
-            },
-        };
-        res.status(200).send(JSON.stringify({
-            msg: 'Inicio de sesión exitoso',
-            user: response
-            }), null, 2);
-    } catch (error) {
-        res.status(500).json({ message: 'Error al iniciar sesión', error: error.message });
+    if (!isMatch) {
+      return res.status(400).json({
+        message: "La contraseña es incorrecta"
+      });
     }
-}
+
+    const token = await createAccessToken({ num_doc: userFound.num_doc });
+    res.cookie("token", token);
+
+    res.json({
+      num_doc: userFound.num_doc,
+      email: userFound.email,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
 
 const getUsers = async (req, res) => {
     try {
