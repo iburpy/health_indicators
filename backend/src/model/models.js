@@ -1,20 +1,5 @@
-const { DataTypes, Model, Sequelize } = require('sequelize');
-
-const MySQL = {
-    name: 'id22201876_indicadores',
-    username: 'id22201876_root',
-    password: '',
-    host: '2a02:4780:bad:c0de::14',
-    dialect: 'mysql',
-    port: 3306
-}
-const sequelize = new Sequelize(
-    MySQL.name, 
-    MySQL.username, 
-    MySQL.password, {
-      host: MySQL.host,
-      dialect: MySQL.dialect,
-});
+const { DataTypes, Model } = require('sequelize');
+const { sequelize } = require('../config/db.js');
 
 class Genero extends Model {};
 
