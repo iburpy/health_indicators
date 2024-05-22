@@ -87,25 +87,17 @@ const login = async (req, res) => {
         const userFound = await Usuario.findOne({ where: { email } });
         if (!userFound) return res.status(400).json({message: "User not found"});
         
-        console.log(`Password provided: ${password}`);
-        console.log(`Password from the database: ${userFound.password}`);
-        
-        const token = await createAccessToken({ numDoc: userFound.num_doc });
+        const token = await createAccessToken({ numDoc: userFound.num_doc, email: userFound.email });
         res.cookie('token', token, { sameSite: 'none', httpOnly: true, secure: true });
         
         const passMatch = await bcrypt.compare(password, userFound.password);
-        if (!passMatch) {
-            return res.status(401).json({ message: 'La contraseña es incorrecta.',
-            providedPassword: password, hashedPassword: userFound.password,
-            token });
-        }
-
-        res.json({num_doc: userFound.num_doc, email: userFound.email, token})
+        if (!passMatch) return res.status(401).json({ message: 'La contraseña es incorrecta.',
+            providedPassword: password, hashedPassword: userFound.password, token: token });
+        res.json({num_doc: userFound.num_doc, email: userFound.email, token: token})
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 };
-
 // const testBcrypt = async () => {
 //   const password = 'hola';
 //   const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -117,27 +109,38 @@ const login = async (req, res) => {
 // };
 
 // testBcrypt();
-
-const getUsers = async (req, res) => {
+const logout = (req, res) => {
     try {
-        const users = await Usuario.findAll();
-        if(!users || users.length === 0) {
-            res.status(404).send(
-                JSON.stringify({ error: 'No se encontraron usuarios.' },
-                null, 2
-            ));
-        } else {
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).send(
-                JSON.stringify({ found: users.length, users },
-                null, 2
-            ));
-        }
+        res.cookie('token', "", { expires: new Date(0) });
+        return res.sendStatus(200, 'Logged out');
     } catch (error) {
-        res.status(400).json({ error: error });
-        console.log(`Error al encontrar usuarios: ${error}`);
+        console.log(`Error al cerrar sesión: ${error}`);
+        res.status(500).json({ message: error.message });
     }
-}
+};
+
+// const getUsers = async (req, res) => {
+//     try {
+//         const users = await Usuario.findAll();
+//         if(!users || users.length === 0) {
+//             res.status(404).send(
+//                 JSON.stringify({ error: 'No se encontraron usuarios.' },
+//                 null, 2
+//             ));
+//         } else {
+//             res.setHeader('Content-Type', 'application/json');
+//             res.status(200).send(
+//                 JSON.stringify({ found: users.length, users },
+//                 null, 2
+//             ));
+//         }
+//     } catch (error) {
+//         res.status(400).json({ error: error });
+//         console.log(`Error al encontrar usuarios: ${error}`);
+//     }
+// }
+
+
 
 const getProfile = async (req, res) => {
     try {
@@ -202,7 +205,8 @@ const editProfile = async (req, res) => {
 module.exports = {
     register,
     login,
-    getUsers,
+    logout,
+    // getUsers,
     getProfile,
     editProfile,
    // deleteProfile   
