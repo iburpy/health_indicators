@@ -106,17 +106,17 @@ const login = async (req, res) => {
     }
 };
 
-const testBcrypt = async () => {
-  const password = 'hola';
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
-  console.log(`Original password: ${password}`);
-  console.log(`Hashed password: ${hashedPassword}`);
+// const testBcrypt = async () => {
+//   const password = 'hola';
+//   const hashedPassword = await bcrypt.hash(password, saltRounds);
+//   console.log(`Original password: ${password}`);
+//   console.log(`Hashed password: ${hashedPassword}`);
 
-  const isMatch = await bcrypt.compare(password, hashedPassword);
-  console.log(`Password comparison result: ${isMatch}`);
-};
+//   const isMatch = await bcrypt.compare(password, hashedPassword);
+//   console.log(`Password comparison result: ${isMatch}`);
+// };
 
-testBcrypt();
+// testBcrypt();
 
 const getUsers = async (req, res) => {
     try {

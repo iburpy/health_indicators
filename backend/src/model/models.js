@@ -266,19 +266,3 @@ UnidadMedida.hasMany(MetaSalud, { foreignKey: 'unidades_medida_id' });
 MetaSalud.belongsTo(UnidadMedida, { foreignKey: 'unidades_medida_id' });
 
 module.exports = { Genero, ContactoEmergencia, UnidadMedida, Usuario, TipoIndicador, Indicador, MetaSalud };
-
-//Función para probar la conexión. Se puede comentar cuando ya se haya probado.
-async function test_con() { 
-    try {
-        await sequelize.authenticate();
-        console.log(`
-                ¡La conexión a la base de datos '${sequelize.config.database}'
-                en '${sequelize.config.host}' ha sido existosa!`);  
-    } catch (error) { 
-        console.error(`
-                ¡Uy! Ha habido un error al conectarse a la base de datos '${sequelize.config.database}'.
-                Error: ${error}`);
-    }
-}
-
-test_con();

@@ -2,6 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const app = express();
 
+const { test_con } = require('../config/conn.test.js');
+
 const health = require('../router/healthcheck.js');
 const GenderRouter = require('../router/gender.router.js');
 const EmergencyRouter = require('../router/emergency.contact.router.js');
@@ -26,5 +28,7 @@ app.use('/api', HealthGoalRouter);
 app.use('/api', IndicatorRouter);
 app.use('/api', IndicatorTypeRouter);
 app.use('/api', UnitsConfigRouter);
+
+test_con();
 
 module.exports = app;
