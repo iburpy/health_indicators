@@ -146,11 +146,11 @@ Usuario.init({
     allowNull: false
   },
   altura: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
     allowNull: false
   },
   peso: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
     allowNull: false
   },
   contacto_emergencia_num_doc: {
