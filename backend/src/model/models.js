@@ -1,10 +1,10 @@
 const { DataTypes, Model, Sequelize } = require('sequelize');
 
 const MySQL = {
-    name: 'indicadores_salud',
-    username: 'root',
+    name: 'id22201876_indicadores',
+    username: 'id22201876_root',
     password: '',
-    host: 'localhost',
+    host: '2a02:4780:bad:c0de::14',
     dialect: 'mysql',
     port: 3306
 }
@@ -24,7 +24,7 @@ Genero.init({
     primaryKey: true,
     autoIncrement: true
   },
-  nombre: {
+  genero: {
     type: DataTypes.STRING,
     allowNull: false
   }

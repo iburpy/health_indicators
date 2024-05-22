@@ -54,7 +54,7 @@ const register = async (req, res) => {
         const response = {
             num_doc: newUser.num_doc,
             nombre_completo: `${newUser.nombre} ${newUser.apellido}`,
-            genero: genero.nombre, email: newUser.email,
+            genero: genero.genero, email: newUser.email,
             password: newUser.password,
             fecha_de_nacimiento: newUser.fecha_de_nacimiento,
             altura: `${newUser.altura} ${unitsConfig.unidad_longitud}`,
@@ -177,8 +177,10 @@ const editProfile = async (req, res) => {
     }
 };
 
-const deleteProfile = async (req, res) => {
-    try {
+
+//Esta parte se puede configurar para agregar la opcion de eliminar la cuenta del usuario
+//const deleteProfile = async (req, res) => {
+  /*  try {
         const user = await Usuario.destroy({
             where: { num_doc: req.params.num_doc }
         });
@@ -195,7 +197,7 @@ const deleteProfile = async (req, res) => {
         res.status(400).json({ error: error });
         console.log(`Error al borrar usuario: ${error}`);
     }
-};
+};*/
 
 module.exports = {
     register,
@@ -203,5 +205,5 @@ module.exports = {
     getUsers,
     getProfile,
     editProfile,
-    deleteProfile   
+   // deleteProfile   
 }

@@ -7,7 +7,7 @@ const {
     getUsers,
     getProfile,
     editProfile,
-    deleteProfile
+   // deleteProfile
 } = require('../controllers/user.controller.js');
 
 router.use(express.json());
@@ -17,6 +17,6 @@ router.post('/login', login);
 router.get('/users', getUsers);
 router.get('/profile/:id', getProfile);
 router.put('/profile/edit/:id', editProfile);
-router.delete('/profile/delete/:id', deleteProfile);
+//router.delete('/profile/delete/:id', deleteProfile);
 
 module.exports = router;
