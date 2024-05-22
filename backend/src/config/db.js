@@ -1,11 +1,11 @@
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
-    'indicadores_salud', 
-    'root', 
+    'id22201876_indicadores', 
+    'id22201876_root', 
     '', 
     {
-        host: 'localhost',
+        host: '2a02:4780:bad:c0de::14',
         dialect: 'mysql',
         port: 3306
     }
