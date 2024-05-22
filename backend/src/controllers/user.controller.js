@@ -1,4 +1,6 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = require('../libs/token.config.js');
 const saltRounds = 10;
 const { createAccessToken } = require('../libs/jwt.js');
 
@@ -82,18 +84,18 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        if (!email || !password) return res.status(400).json({message: "Invalid email or password"});
 
         const userFound = await Usuario.findOne({ where: { email } });
         if (!userFound) return res.status(400).json({message: "User not found"});
         
-        const token = await createAccessToken({ numDoc: userFound.num_doc, email: userFound.email });
-        res.cookie('token', token, { sameSite: 'none', httpOnly: true, secure: true });
-        
         const passMatch = await bcrypt.compare(password, userFound.password);
-        if (!passMatch) return res.status(401).json({ message: 'La contraseña es incorrecta.',
-            providedPassword: password, hashedPassword: userFound.password, token: token });
-        res.json({num_doc: userFound.num_doc, email: userFound.email, token: token})
+        if (!passMatch) return res.status(401).json({ message: 'La contraseña es incorrecta.' });
+
+
+        const token = await createAccessToken({ numDoc: userFound.num_doc, email: userFound.email });
+        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' });
+
+        res.json({num_doc: userFound.num_doc, email: userFound.email, token: token});
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -108,16 +110,39 @@ const login = async (req, res) => {
 //   console.log(`Password comparison result: ${isMatch}`);
 // };
 
-// testBcrypt();
+const verifyToken = async (req, res) => {
+  const { token } = req.cookies;
+  if (!token) return res.send(false);
+
+  jwt.verify(token, JWT_SECRET, async (error, user) => {
+    if (error) return res.sendStatus(401);
+
+    const userFound = await Usuario.findById(user.num_doc);
+    if (!userFound) return res.sendStatus(401);
+
+    return res.json({
+      numDoc: userFound.num_doc,
+      email: userFound.email,
+      token: token
+    });
+  });
+};
+
 const logout = (req, res) => {
     try {
-        res.cookie('token', "", { expires: new Date(0) });
+        res.cookie('token', "", { 
+            httpOnly: true,
+            secure: true,
+            expires: new Date(0) 
+        });
         return res.sendStatus(200, 'Logged out');
     } catch (error) {
         console.log(`Error al cerrar sesión: ${error}`);
         res.status(500).json({ message: error.message });
     }
 };
+
+
 
 // const getUsers = async (req, res) => {
 //     try {
@@ -205,6 +230,7 @@ const editProfile = async (req, res) => {
 module.exports = {
     register,
     login,
+    verifyToken,
     logout,
     // getUsers,
     getProfile,
