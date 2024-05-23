@@ -1,5 +1,5 @@
+const { JWT_SECRET } = require('../libs/token.config.js');
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = require('./token.config.js');
 
 const createAccessToken = async (payload) => {
   return new Promise((resolve, reject) => {

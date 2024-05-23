@@ -1,7 +1,7 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const JWT_SECRET = require('../libs/token.config.js');
 const saltRounds = 10;
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const { createAccessToken } = require('../libs/jwt.js');
 
 const { 
@@ -91,7 +91,6 @@ const login = async (req, res) => {
         const passMatch = await bcrypt.compare(password, userFound.password);
         if (!passMatch) return res.status(401).json({ message: 'La contraseña es incorrecta.' });
 
-
         const token = await createAccessToken({ numDoc: userFound.num_doc, email: userFound.email });
         res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' });
 
@@ -114,7 +113,7 @@ const verifyToken = async (req, res) => {
   const { token } = req.cookies;
   if (!token) return res.send(false);
 
-  jwt.verify(token, JWT_SECRET, async (error, user) => {
+  jwt.verify(token, process.env.JWT_SECRET, async (error, user) => {
     if (error) return res.sendStatus(401);
 
     const userFound = await Usuario.findById(user.num_doc);
@@ -130,19 +129,13 @@ const verifyToken = async (req, res) => {
 
 const logout = (req, res) => {
     try {
-        res.cookie('token', "", { 
-            httpOnly: true,
-            secure: true,
-            expires: new Date(0) 
-        });
+        res.cookie('token', "", { expires: new Date(0) });
         return res.sendStatus(200, 'Logged out');
     } catch (error) {
         console.log(`Error al cerrar sesión: ${error}`);
         res.status(500).json({ message: error.message });
     }
 };
-
-
 
 // const getUsers = async (req, res) => {
 //     try {
@@ -169,15 +162,12 @@ const logout = (req, res) => {
 
 const getProfile = async (req, res) => {
     try {
-        const user = await Usuario.findByPk(req.params.num_doc);
-        if(!user || user.length === 0) {
-            res.status(404).json({ error: 'Usuario no encontrado' });
-        } else {
+        const user = await Usuario.findByPk(req.user.num_doc);
+        if(!user || user.length === 0) res.status(404).json({ error: 'Usuario no encontrado' });
+        else {
             res.setHeader('Content-Type', 'application/json');
-            res.status(200).send(
-                JSON.stringify({ found: user },
-                null, 2
-            ))
+            console.log(user);
+            res.status(200).send(JSON.stringify({ found: user }, null, 2))
         }
     } catch (error) {
         res.status(400).json({ error: error });
@@ -188,7 +178,7 @@ const getProfile = async (req, res) => {
 const editProfile = async (req, res) => {
     try {
         const user = await Usuario.update(req.body, {
-            where: { num_doc: req.params.num_doc }
+            where: { num_doc: req.user.num_doc }
         });
         if(!user || user.length === 0) {
             res.status(404).json({ error: 'Usuario no actualizado' });
@@ -210,7 +200,7 @@ const editProfile = async (req, res) => {
 //const deleteProfile = async (req, res) => {
   /*  try {
         const user = await Usuario.destroy({
-            where: { num_doc: req.params.num_doc }
+            where: { num_doc: req.user.num_doc }
         });
         if(!user || user.length === 0) {
             res.status(404).json({ error: 'Usuario no eliminado' });
