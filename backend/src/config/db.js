@@ -1,14 +1,14 @@
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
-    'id22201876_indicadores', 
-    'id22201876_root', 
-    '', 
+    'indicadores_supposedug', 
+    'indicadores_supposedug', 
+    '55d2615c3db0da611f60454b193bd10792679050', 
     {
-        host: '2a02:4780:bad:c0de::14',
+        host: 'chw.h.filess.io',
         dialect: 'mysql',
-        port: 3306
+        port: 3307
     }
 );
 
-module.exports = { sequelize };
+module.exports = { sequelize };
