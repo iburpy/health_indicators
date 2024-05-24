@@ -158,7 +158,10 @@ const logout = (req, res) => {
 //     }
 // }
 
-
+// Bueno el error está en la autenticación
+// Cuando un user se registra y logea, se crea un token.
+// Pero cuando un user logeado quiere ver su perfil mediante GET /profile
+// La cookie se borra y no permite ver el perfil.
 
 const getProfile = async (req, res) => {
     try {
@@ -224,6 +227,6 @@ module.exports = {
     logout,
     // getUsers,
     getProfile,
-    editProfile,
+    editProfile
    // deleteProfile   
 }
