@@ -59,7 +59,7 @@ ContactoEmergencia.init({
   timestamps: false
 });
 
-class UnidadMedida extends Model {};
+class UnidadMedida extends Model {}
 
 UnidadMedida.init({
   id: {
@@ -67,29 +67,61 @@ UnidadMedida.init({
     primaryKey: true,
     autoIncrement: true
   },
-  unidad_longitud: {
-    type: DataTypes.STRING(10),
-    defaultValue: 'm'
-  },
-  unidad_peso: {
-    type: DataTypes.STRING(10),
-    defaultValue: 'kg'
-  },
-  unidad_presion_arterial: {
+  presion_arterial: {
     type: DataTypes.STRING(45),
     defaultValue: 'mmHg'
   },
-  unidad_glucosa_sangre: {
-    type: DataTypes.STRING(45),
-    defaultValue: 'mg/dL'
-  },
-  unidad_frecuencia_cardiaca: {
+  frecuencia_cardiaca: {
     type: DataTypes.STRING(45),
     defaultValue: 'bpm'
   },
-  unidad_temperatura: {
+  nivel_glucosa_sangre: {
     type: DataTypes.STRING(45),
-    defaultValue: '° C'
+    defaultValue: 'mg/dL'
+  },
+  peso_corporal: {
+    type: DataTypes.STRING(10),
+    defaultValue: 'kg'
+  },
+  altura: {
+    type: DataTypes.STRING(10),
+    defaultValue: 'm'
+  },
+  IMC: {
+    type: DataTypes.STRING(10),
+    defaultValue: '%'
+  },
+  temperatura_corporal: {
+    type: DataTypes.STRING(45),
+    defaultValue: '°C'
+  },
+  saturacion_oxigeno: {
+    type: DataTypes.STRING(10),
+    defaultValue: '%'
+  },
+  consumo_agua: {
+    type: DataTypes.STRING(10),
+    defaultValue: 'L'
+  },
+  tiempo_actividad_fisica: {
+    type: DataTypes.STRING(10),
+    defaultValue: 'min'
+  },
+  medidas_cintura: {
+    type: DataTypes.STRING(10),
+    defaultValue: 'cm'
+  },
+  medidas_cadera: {
+    type: DataTypes.STRING(10),
+    defaultValue: 'cm'
+  },
+  capacidad_cardiovascular: {
+    type: DataTypes.STRING(45),
+    defaultValue: 'ml/kg/min'
+  },
+  fuerza_muscular: {
+    type: DataTypes.STRING(10),
+    defaultValue: 'N'
   }
 }, {
   sequelize,
@@ -128,14 +160,6 @@ Usuario.init({
   },
   password: {
     type: DataTypes.STRING(100),
-    allowNull: false
-  },
-  altura: {
-    type: DataTypes.FLOAT,
-    allowNull: false
-  },
-  peso: {
-    type: DataTypes.FLOAT,
     allowNull: false
   },
   contacto_emergencia_num_doc: {

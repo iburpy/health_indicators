@@ -16,7 +16,7 @@ const register = async (req, res) => {
         const {
             num_doc, nombre, apellido,
             fecha_de_nacimiento, generos_id,
-            email, password, altura, peso,
+            email, password,
             contacto_emergencia, unidades_medida
         } = req.body;
 
@@ -27,7 +27,7 @@ const register = async (req, res) => {
         if (
             !num_doc || !nombre || !apellido || 
             !fecha_de_nacimiento || !generos_id || 
-            !email || !password || !altura || !peso || 
+            !email || !password || 
             !contacto_emergencia || !unidades_medida
         ) return res.status(400).json(['Todos los campos son obligatorios']);
         
@@ -49,7 +49,7 @@ const register = async (req, res) => {
         const newUser = new Usuario({
             num_doc, nombre, apellido,
             fecha_de_nacimiento, generos_id,
-            email, password: hashPass, altura, peso,
+            email, password: hashPass,
             contacto_emergencia_num_doc: emergencyContact.num_doc, unidades_medida_id: unitsConfig.id
         }); const savedUser = await newUser.save();
 
@@ -62,8 +62,6 @@ const register = async (req, res) => {
             genero: genero.genero, email: newUser.email,
             password: newUser.password,
             fecha_de_nacimiento: newUser.fecha_de_nacimiento,
-            altura: `${newUser.altura} ${unitsConfig.unidad_longitud}`,
-            peso: `${newUser.peso} ${unitsConfig.unidad_peso}`,
             contacto_emergencia: {
                     num_doc: newUser.contacto_emergencia_num_doc,
                     nombre_completo: emergencyContact.nombre_completo,
