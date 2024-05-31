@@ -19,17 +19,20 @@ const register = async (req, res) => {
             email, password, altura, peso,
             contacto_emergencia, unidades_medida
         } = req.body;
-        
+
+        const userFound = await Usuario.findOne({ where: { email } });
+        if (userFound) return res.status(400).json({ message: "Este correo ya está en uso." });
+
         const hashPass = await bcrypt.hash(password, saltRounds);
         if (
             !num_doc || !nombre || !apellido || 
             !fecha_de_nacimiento || !generos_id || 
             !email || !password || !altura || !peso || 
             !contacto_emergencia || !unidades_medida
-        ) return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+        ) return res.status(400).json(['Todos los campos son obligatorios']);
         
         const genero = await Genero.findByPk(generos_id);
-        if (!genero) return res.status(404).json({ message: 'Género no encontrado' });
+        if (!genero) return res.status(404).json(['Género no encontrado']);
         
         let emergencyContact = await ContactoEmergencia.findByPk(contacto_emergencia.num_doc);
         if (!emergencyContact) emergencyContact = await ContactoEmergencia.create(contacto_emergencia);
@@ -41,7 +44,7 @@ const register = async (req, res) => {
                 unidad_presion_arterial: unidades_medida.unidad_presion_arterial, unidad_glucosa_sangre: unidades_medida.unidad_glucosa_sangre,
                 unidad_frecuencia_cardiaca: unidades_medida.unidad_frecuencia_cardiaca,unidad_temperatura: unidades_medida.unidad_temperatura
             }
-        }); if (!unitsConfig) unitsConfig = await UnidadMedida.create(unidades_medida);
+        });if (!unitsConfig) unitsConfig = await UnidadMedida.create(unidades_medida);
         
         const newUser = new Usuario({
             num_doc, nombre, apellido,
