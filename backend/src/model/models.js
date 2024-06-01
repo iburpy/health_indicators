@@ -45,7 +45,8 @@ ContactoEmergencia.init({
   },
   relacion: {
     type: DataTypes.STRING(45),
-    allowNull: false
+    allowNull: false,
+    defaultValue: 'ES FAMILIAR'
   },
   email: {
     type: DataTypes.STRING(45),
@@ -68,59 +69,55 @@ UnidadMedida.init({
     autoIncrement: true
   },
   presion_arterial: {
-    type: DataTypes.STRING(45),
+    type: DataTypes.STRING(250),
     defaultValue: 'mmHg'
   },
   frecuencia_cardiaca: {
-    type: DataTypes.STRING(45),
+    type: DataTypes.STRING(250),
     defaultValue: 'bpm'
   },
   nivel_glucosa_sangre: {
-    type: DataTypes.STRING(45),
+    type: DataTypes.STRING(250),
     defaultValue: 'mg/dL'
   },
   peso_corporal: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(250),
     defaultValue: 'kg'
   },
   altura: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(250),
     defaultValue: 'm'
   },
-  IMC: {
-    type: DataTypes.STRING(10),
-    defaultValue: '%'
-  },
   temperatura_corporal: {
-    type: DataTypes.STRING(45),
+    type: DataTypes.STRING(250),
     defaultValue: '°C'
   },
   saturacion_oxigeno: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(250),
     defaultValue: '%'
   },
   consumo_agua: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(250),
     defaultValue: 'L'
   },
   tiempo_actividad_fisica: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(250),
     defaultValue: 'min'
   },
   medidas_cintura: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(250),
     defaultValue: 'cm'
   },
   medidas_cadera: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(250),
     defaultValue: 'cm'
   },
   capacidad_cardiovascular: {
-    type: DataTypes.STRING(45),
+    type: DataTypes.STRING(250),
     defaultValue: 'ml/kg/min'
   },
   fuerza_muscular: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(250),
     defaultValue: 'N'
   }
 }, {

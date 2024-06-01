@@ -22,12 +22,19 @@ function RegisterPage() {
 
   const onSubmit = handleSubmit(async (values) => {
     values.unidades_medida = {
-      unidad_longitud: "cm",
-      unidad_peso: "kg",
-      unidad_presion_arterial: "mmHg",
-      unidad_glucosa_sangre: "mg/dL",
-      unidad_frecuencia_cardiaca: "bpm",
-      unidad_temperatura: "°C",
+      presion_arterial: "mmHg",
+      frecuencia_cardiaca: "bpm",
+      nivel_glucosa_sangre: "mg/dL",
+      peso_corporal: "kg",
+      altura: "m",
+      temperatura_corporal: "°C",
+      saturacion_oxigeno: "SpO2",
+      consumo_agua: "L",
+      tiempo_actividad_fisica: "min",
+      medidas_cintura: "cm",
+      medidas_cadera: "cm",
+      capacidad_cardiovascular: "ml/kg/min",
+      fuerza_muscular: "N",
     };
     await signup(values);
   });
@@ -62,7 +69,7 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="num_doc"
-                  className="block text-sm font-bold mb-2"
+                  className="block text-sm font-bold mb-2 mt-2"
                 >
                   Número de Documento:
                 </label>
@@ -80,7 +87,7 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="nombre"
-                  className="block text-sm font-bold mb-2"
+                  className="block text-sm font-bold mb-2 mt-2"
                 >
                   Nombre:
                 </label>
@@ -98,7 +105,7 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="apellido"
-                  className="block text-sm font-bold mb-2"
+                  className="block text-sm font-bold mb-2 mt-2"
                 >
                   Apellido:
                 </label>
@@ -116,7 +123,7 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="fecha_de_nacimiento"
-                  className="block text-sm font-bold mb-2"
+                  className="block text-sm font-bold mb-2 mt-2"
                 >
                   Fecha de Nacimiento:
                 </label>
@@ -133,7 +140,7 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="generos_id"
-                  className="block text-sm font-bold mb-2"
+                  className="block text-sm font-bold mb-2 mt-2"
                 >
                   Género:
                 </label>
@@ -153,7 +160,7 @@ function RegisterPage() {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="email" className="block text-sm font-bold mb-2">
+                <label htmlFor="email" className="block text-sm font-bold mb-2 mt-2">
                   Correo Electrónico:
                 </label>
                 <input
@@ -170,7 +177,7 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-bold mb-2"
+                  className="block text-sm font-bold mb-2 mt-2"
                 >
                   Contraseña:
                 </label>
@@ -185,45 +192,12 @@ function RegisterPage() {
                 )}
               </div>
             </div>
-
-            <div className="mb-4">
-              <label htmlFor="altura" className="block text-sm font-bold mb-2">
-                Altura (cm):
-              </label>
-              <input
-                type="text"
-                {...register("altura", { required: true })}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                placeholder="Altura"
-              />
-              {errors.altura && (
-                <span className="text-red-500">Este campo es requerido</span>
-              )}
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="peso" className="block text-sm font-bold mb-2">
-                Peso (kg):
-              </label>
-              <input
-                type="text"
-                {...register("peso", { required: true })}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                placeholder="Peso"
-              />
-              {errors.peso && (
-                <span className="text-red-500">Este campo es requerido</span>
-              )}
-            </div>
-
             <p className="mt-2 text-center text-sm text-gray-600">
           <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
-            Ya estas Registrado? Inicia Sesión
+            Ya estas Registrado? 
+            Inicia Sesión
           </Link>
           </p>
-
-          
-
             <div>
               <button
                 type="submit"
@@ -233,10 +207,7 @@ function RegisterPage() {
               </button>
             </div>
           </form>
-
-          
         )}
-
         {step === 2 && (
           <form onSubmit={onSubmit} className="mt-6 space-y-6">
             <h3 className="text-lg font-medium text-gray-900">
@@ -247,7 +218,7 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="contacto_emergencia.num_doc"
-                  className="block text-sm font-bold mb-2"
+                  className="block text-sm font-bold mb-2 mt-2"
                 >
                   Número de Documento:
                 </label>
@@ -267,7 +238,7 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="contacto_emergencia.nombre_completo"
-                  className="block text-sm font-bold mb-2"
+                  className="block text-sm font-bold mb-2 mt-2"
                 >
                   Nombre Completo:
                 </label>
@@ -287,9 +258,9 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="contacto_emergencia.generos_id"
-                  className="block text-sm font-bold mb-2"
+                  className="block text-sm font-bold mb-2 mt-2"
                 >
-                  Género:
+                  Género
                 </label>
                 <select
                   {...register("contacto_emergencia.generos_id", {
@@ -300,6 +271,7 @@ function RegisterPage() {
                 >
                   <option value={1}>Masculino</option>
                   <option value={2}>Femenino</option>
+                  <option value={3}>Prefiero no decirlo</option>
                 </select>
                 {errors.contacto_emergencia?.generos_id && (
                   <span className="text-red-500">Este campo es requerido</span>
@@ -309,9 +281,8 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="contacto_emergencia.telefono"
-                  className="block text-sm font-bold mb-2"
-                >
-                  Teléfono:
+                  className="block text-sm font-bold mb-2 mt-2">
+                  Teléfono
                 </label>
                 <input
                   type="text"
@@ -329,9 +300,8 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="contacto_emergencia.parentesco"
-                  className="block text-sm font-bold mb-2"
-                >
-                  Parentesco:
+                  className="block text-sm font-bold mb-2 mt-2">
+                  Parentesco
                 </label>
                 <input
                   type="text"
@@ -349,9 +319,9 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="contacto_emergencia.relacion"
-                  className="block text-sm font-bold mb-2"
+                  className="block text-sm font-bold mb-2 mt-2"
                 >
-                  Relación:
+                  Relación
                 </label>
                 <input
                   type="text"
@@ -369,9 +339,9 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="contacto_emergencia.email"
-                  className="block text-sm font-bold mb-2"
+                  className="block text-sm font-bold mb-2 mt-2"
                 >
-                  Correo Electrónico:
+                  Correo electrónico
                 </label>
                 <input
                   type="email"
@@ -384,91 +354,12 @@ function RegisterPage() {
                 )}
               </div>
             </div>
-
-            <h3 className="text-lg font-medium text-gray-900">
-              Indicadores de Salud
-            </h3>
-
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div className="mb-4">
-                <label
-                  htmlFor="presion_arterial"
-                  className="block text-sm font-bold mb-2"
-                >
-                  Presión Arterial (mmHg):
-                </label>
-                <input
-                  type="text"
-                  {...register("presion_arterial", { required: true })}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="Presión Arterial"
-                />
-                {errors.presion_arterial && (
-                  <span className="text-red-500">Este campo es requerido</span>
-                )}
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="glucosa_sangre"
-                  className="block text-sm font-bold mb-2"
-                >
-                  Glucosa en Sangre (mg/dL):
-                </label>
-                <input
-                  type="text"
-                  {...register("glucosa_sangre", { required: true })}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="Glucosa en Sangre"
-                />
-                {errors.glucosa_sangre && (
-                  <span className="text-red-500">Este campo es requerido</span>
-                )}
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="frecuencia_cardiaca"
-                  className="block text-sm font-bold mb-2"
-                >
-                  Frecuencia Cardiaca (bpm):
-                </label>
-                <input
-                  type="text"
-                  {...register("frecuencia_cardiaca", { required: true })}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="Frecuencia Cardiaca"
-                />
-                {errors.frecuencia_cardiaca && (
-                  <span className="text-red-500">Este campo es requerido</span>
-                )}
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="temperatura"
-                  className="block text-sm font-bold mb-2"
-                >
-                  Temperatura (°C):
-                </label>
-                <input
-                  type="text"
-                  {...register("temperatura", { required: true })}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="Temperatura"
-                />
-                {errors.temperatura && (
-                  <span className="text-red-500">Este campo es requerido</span>
-                )}
-              </div>
-            </div>
-
             <div>
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Registrar
+                Registrarse
               </button>
             </div>
           </form>

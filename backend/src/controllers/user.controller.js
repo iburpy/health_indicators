@@ -20,67 +20,68 @@ const register = async (req, res) => {
             contacto_emergencia, unidades_medida
         } = req.body;
 
+        // Check for required fields
+        if (!num_doc || !nombre || !apellido || !fecha_de_nacimiento || !generos_id || !email || !password || !contacto_emergencia || !unidades_medida) {
+            return res.status(400).json(['Todos los campos son obligatorios']);
+        }
+
+        // Check if the user already exists
         const userFound = await Usuario.findOne({ where: { email } });
         if (userFound) return res.status(400).json({ message: "Este correo ya está en uso." });
 
+        // Hash the password
         const hashPass = await bcrypt.hash(password, saltRounds);
-        if (
-            !num_doc || !nombre || !apellido || 
-            !fecha_de_nacimiento || !generos_id || 
-            !email || !password || 
-            !contacto_emergencia || !unidades_medida
-        ) return res.status(400).json(['Todos los campos son obligatorios']);
-        
-        const genero = await Genero.findByPk(generos_id);
-        if (!genero) return res.status(404).json(['Género no encontrado']);
-        
-        let emergencyContact = await ContactoEmergencia.findByPk(contacto_emergencia.num_doc);
-        if (!emergencyContact) emergencyContact = await ContactoEmergencia.create(contacto_emergencia);
-        else await emergencyContact.update(contacto_emergencia);
 
-        let unitsConfig = await UnidadMedida.findOne({
-            where: {
-                unidad_longitud: unidades_medida.unidad_longitud, unidad_peso: unidades_medida.unidad_peso,
-                unidad_presion_arterial: unidades_medida.unidad_presion_arterial, unidad_glucosa_sangre: unidades_medida.unidad_glucosa_sangre,
-                unidad_frecuencia_cardiaca: unidades_medida.unidad_frecuencia_cardiaca,unidad_temperatura: unidades_medida.unidad_temperatura
-            }
-        });if (!unitsConfig) unitsConfig = await UnidadMedida.create(unidades_medida);
-        
+        // Check for valid gender
+        const gender = await Genero.findByPk(generos_id);
+        if (!gender) return res.status(404).json(['Género no encontrado']);
+
+        // Handle emergency contact: Create the emergency contact directly
+        let emergencyContact = await ContactoEmergencia.create(contacto_emergencia);
+
+        // Handle units of measurement: Create the units of measurement directly
+        let unitsConfig = await UnidadMedida.create(unidades_medida);
+
+        // Create the new user
         const newUser = new Usuario({
             num_doc, nombre, apellido,
             fecha_de_nacimiento, generos_id,
             email, password: hashPass,
-            contacto_emergencia_num_doc: emergencyContact.num_doc, unidades_medida_id: unitsConfig.id
-        }); const savedUser = await newUser.save();
+            contacto_emergencia_num_doc: emergencyContact.num_doc,
+            unidades_medida_id: unitsConfig.id
+        });
+        const savedUser = await newUser.save();
 
+        // Create the token
         const token = await createAccessToken({ num_doc: savedUser.num_doc });
-        res.cookie('token', token);
-        
+        res.cookie('token', token, { httpOnly: true });
+
+        // Build the response
         const response = {
             num_doc: newUser.num_doc,
             nombre_completo: `${newUser.nombre} ${newUser.apellido}`,
-            genero: genero.genero, email: newUser.email,
-            password: newUser.password,
+            genero: gender.genero,
+            email: newUser.email,
             fecha_de_nacimiento: newUser.fecha_de_nacimiento,
             contacto_emergencia: {
-                    num_doc: newUser.contacto_emergencia_num_doc,
-                    nombre_completo: emergencyContact.nombre_completo,
-                    email: emergencyContact.email,
-                    fecha_de_nacimiento: emergencyContact.fecha_de_nacimiento,
-                    genero: genero.nombre,
-                    parentesco: emergencyContact.parentesco,
-                    relacion: emergencyContact.relacion,
-                    telefono: emergencyContact.telefono
-                },
+                num_doc: newUser.contacto_emergencia_num_doc,
+                nombre_completo: emergencyContact.nombre_completo,
+                email: emergencyContact.email,
+                telefono: emergencyContact.telefono,
+                genero: gender.nombre,
+                parentesco: emergencyContact.parentesco,
+                relacion: emergencyContact.relacion,
+            },
             unidades_medida: unitsConfig
-            }
+        };
 
-        res.status(201).send(JSON.stringify({response, token}), null, 2);
+        res.status(201).json({ response, token });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error al registrar el usuario', error: error.message });
     }
 };
+
 
 const login = async (req, res) => {
     try {
