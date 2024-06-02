@@ -6,16 +6,19 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { MdAssignmentAdd } from "react-icons/md";
+// import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+
 import '../assets/fonts/fonts.css';
 
 function RegisterPage() {
+  useEffect(() => { document.title = "Registro" });
+
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { signup, isAuthenticated, errors: registerErrors } = useAuten();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
 
   useEffect(() => { if (isAuthenticated) navigate("/login") }, [isAuthenticated, navigate]);
-  useEffect(() => { document.title = "Registro" }, []);
 
   const progress = (step / 3) * 100;
 
@@ -32,14 +35,15 @@ function RegisterPage() {
   const nextStep = () => { setStep(step + 1) };
   const prevStep = () => { if(step > 1) setStep(step - 1) };
   return (
-    <div id="bg" /*style={{ backgroundImage: `url(${background})` }}*/ className="flex bg-slate-200  min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div id="bg" className="flex bg-slate-200  min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
+      {/* Barra de Progreso del Formulario */}
         <div className="w-full bg-slate-300 h-2 rounded-full mt-4 relative">
         <div className="bg-indigo-600 h-2 rounded-full" 
           style={{ width: `${progress}%` }}>
         </div>
       </div>
-        <h2 className="mt-10 text-center flex items-center justify-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-10 mb-4 text-center flex items-center justify-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
           <MdAssignmentAdd className="mr-2"/>
           Registro
         </h2>
@@ -60,12 +64,10 @@ function RegisterPage() {
             <h3 className="text-lg text-center mb-2 font-medium text-gray-900">
               Información Personal
             </h3>
-            <fieldset>
             <h5 className="text-center text-sm text-gray-600 mb-6">
             <FontAwesomeIcon icon={faExclamationCircle} className="mr-1" />
               Este es el primer paso para registrarte. Completa los siguientes campos para continuar.
             </h5>
-            </fieldset>
               <div className="mb-4">
                 <label
                   htmlFor="num_doc"
@@ -134,6 +136,7 @@ function RegisterPage() {
                 </label>
                 <select
                   {...register("generos_id", { required: true, valueAsNumber: true })}
+                  defaultValue=""
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
                   <option value="">Selecciona tu género</option>
@@ -161,31 +164,25 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-bold mb-2 mt-2"
-                >
+                  className="block text-sm font-bold mb-2 mt-2">
                   Contraseña
                 </label>
                 <input
                   type="password"
-                  {...register("password", { required: true })}
+                  {...register("password", { required: true, minLength: 6 })}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="Contraseña"
                 />
-                {errors.password && (
-                  <span className="text-red-500">Este campo es requerido</span>
-                )}
+                {errors?.password?.type === "required" && <p>Este campo es requerido.</p>}
+                {errors?.password?.type === "minLength" && <p>Las contraseñas deben tener mínimo 6 caracteres.</p>}
               </div>
             </div>
-            <p className="mt-2 text-center text-sm text-gray-600">
-            
-          </p>
             <div>
               <button
                 type="button"
                 onClick={nextStep}
                 {...window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                 Siguiente
               </button>
             </div>
@@ -204,15 +201,12 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="contacto_emergencia.num_doc"
-                  className="block text-sm font-bold mb-2 mt-2"
-                >
+                  className="block text-sm font-bold mb-2 mt-2">
                   Número de documento
                 </label>
                 <input
                   type="text"
-                  {...register("contacto_emergencia.num_doc", {
-                    required: true,
-                  })}
+                  {...register("contacto_emergencia.num_doc", { required: true })}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="Documento de Identidad Principal"
                 />
@@ -224,15 +218,12 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="contacto_emergencia.nombre_completo"
-                  className="block text-sm font-bold mb-2 mt-2"
-                >
+                  className="block text-sm font-bold mb-2 mt-2">
                   Nombre completo
                 </label>
                 <input
                   type="text"
-                  {...register("contacto_emergencia.nombre_completo", {
-                    required: true,
-                  })}
+                  {...register("contacto_emergencia.nombre_completo", { required: true })}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="Nombre Completo"
                 />
@@ -242,16 +233,14 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="contacto_emergencia.generos_id"
-                  className="block text-sm font-bold mb-2 mt-2"
-                >
+                  className="block text-sm font-bold mb-2 mt-2">
                   Género
                 </label>
                 <select 
+                  defaultValue=""
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  {...register("contacto_emergencia.generos_id", {
-                    required: true, valueAsNumber: true })}
-                  >
-                  <option value="">Escoge el género de tu contacto...</option>
+                  {...register("contacto_emergencia.generos_id", { required: true, valueAsNumber: true })}>
+                  <option value="">Selecciona el género de tu contacto...</option>
                   <option value={1}>Masculino</option>
                   <option value={2}>Femenino</option>
                   <option value={3}>Prefiero no decirlo</option>
@@ -280,6 +269,7 @@ function RegisterPage() {
                   Parentesco
                 </label> 
                 <select className="w-full px-3 py-2 border rounded-lg"
+                      defaultValue=""
                   {...register("contacto_emergencia.parentesco", { required: true})}>
                   <option value="">Selecciona el parentesco de tu contacto</option>
                   <optgroup label="Por consanguinidad">
@@ -314,6 +304,7 @@ function RegisterPage() {
                 </label>
                 <select
                   className="w-full px-3 py-2 border rounded-lg"
+                  defaultValue=""
                   onChange={handleChange} value={selectedRelation}>
                   <option value="">Selecciona tu relación con tu contacto</option>
                   <option value="Amigo/a">Amigo o Amiga</option>
@@ -414,6 +405,7 @@ function RegisterPage() {
                   <option value="">...</option>
                   <option value="m">m</option>
                   <option value="cm">cm</option>
+                  <option value="ft">ft</option>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
@@ -422,6 +414,7 @@ function RegisterPage() {
                   <option value="">...</option>
                   <option value="°C">°C</option>
                   <option value="°F">°F</option>
+                  <option value="°K">°K</option>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
