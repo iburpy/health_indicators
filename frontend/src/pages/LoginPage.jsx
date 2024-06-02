@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAuten } from "../context/AutenContext";
 import { Link } from "react-router-dom";
@@ -9,6 +10,8 @@ function LoginPage() {
     formState: { errors },
   } = useForm();
   const { signin, signinErrors = [] } = useAuten();  // Asegurarse de que signinErrors sea un array por defecto
+
+  useEffect(() => { document.title = "Inicio de sesión" }, []);
 
   const onSubmit = (data) => {
     signin(data);
