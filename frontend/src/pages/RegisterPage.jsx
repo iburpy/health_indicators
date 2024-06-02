@@ -43,11 +43,6 @@ function RegisterPage() {
           <MdAssignmentAdd className="mr-2"/>
           Registro
         </h2>
-        <p className="flex mt-4 justify-center text-gray-500 text-sm">¿Ya tienes cuenta?&nbsp;
-            <Link to="/login" className="font-medium mb-4 text-indigo-600 hover:text-indigo-500">
-              Inicia sesión aquí.
-            </Link>
-        </p>
         {Array.isArray(registerErrors) && registerErrors.map((error, i) => ( 
                 <div key={i} className="bg-red-500 p-2 text-white">{error}</div> 
         ))}
@@ -518,6 +513,11 @@ function RegisterPage() {
         </form>
       )}
       </div>
+      <p className="flex mt-4 justify-center text-gray-500 text-sm">¿Ya tienes cuenta?&nbsp;
+            <Link to="/login" className="font-medium mb-4 text-indigo-600 hover:text-indigo-500">
+              Inicia sesión aquí.
+            </Link>
+        </p>
     </div>
   );
 }
