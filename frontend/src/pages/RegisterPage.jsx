@@ -379,118 +379,105 @@ function RegisterPage() {
             <div className="mt-4 flex flex-wrap justify-between items-center">
               <label htmlFor="unidades_medida.presion_arterial" className="block text-sm font-bold mb-2 mt-2 mr-2">Presión Arterial</label>
               <select {...register("unidades_medida.presion_arterial")} className="flex mb-1 mt-1 rounded relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select-box">
-                <optgroup label="Presión Arterial">
+                  <option value="">...</option>
                   <option value="mmHg">mmHg</option>
                   <option value="kPa">kPa</option>
-                </optgroup>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
               <label htmlFor="unidades_medida.frecuencia_cardiaca" className="block text-sm font-bold mb-2 mt-2 mr-2">Frecuencia Cardiaca</label>
               <select {...register("unidades_medida.frecuencia_cardiaca")} className="flex mb-1 mt-1 rounded relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select-box">
-                <optgroup label="Frecuencia Cardiaca">
+                  <option value="">...</option>
                   <option value="bpm">bpm</option>
                   <option value="Hz">Hz</option>
-                </optgroup>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
               <label htmlFor="unidades_medida.nivel_glucosa_sangre" className="block text-sm font-bold mb-2 mt-2 mr-2">Nivel Glucosa</label>
               <select {...register("unidades_medida.nivel_glucosa_sangre")} className="flex mb-1 mt-1 rounded relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select-box select-box">
-                <optgroup label="Nivel Glucosa">
+                  <option value="">...</option>
                   <option value="mg/dL">mg/dL</option>
                   <option value="mmol/L">mmol/L</option>
-                </optgroup>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
               <label htmlFor="unidades_medida.peso_corporal" className="block text-sm font-bold mb-2 mt-2 mr-2">Peso Corporal</label>
               <select {...register("unidades_medida.peso_corporal")} className="flex mb-1 mt-1 rounded relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select-box select-box">
-                <optgroup label="Peso Corporal">
+                  <option value="">...</option>
                   <option value="kg">kg</option>
                   <option value="lb">lb</option>
-                </optgroup>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
               <label htmlFor="unidades_medida.altura" className="block text-sm font-bold mb-2 mt-2 mr-2">Altura</label>
               <select {...register("unidades_medida.altura")} className="flex mb-1 mt-1 rounded relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select-box select-box">
-                <optgroup label="Altura">
+                  <option value="">...</option>
                   <option value="m">m</option>
                   <option value="cm">cm</option>
-                </optgroup>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
               <label htmlFor="unidades_medida.temperatura_corporal" className="block text-sm font-bold mb-2 mt-2 mr-2">Temperatura Corporal</label>
               <select {...register("unidades_medida.temperatura_corporal")} className="flex mb-1 mt-1 rounded relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select-box select-box">
-                <optgroup label="Temperatura Corporal">
+                  <option value="">...</option>
                   <option value="°C">°C</option>
                   <option value="°F">°F</option>
-                </optgroup>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
               <label htmlFor="saturacion_oxigeno" className="block text-sm font-bold mb-2 mt-2 mr-2">Saturación de Oxígeno</label>
               <select name="saturacion_oxigeno" className="flex mb-1 mt-1 rounded relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select-box select-box">
-                <optgroup label="Saturación de Oxígeno">
+                  <option value="">...</option>
                   <option value="SpO2">SpO2</option>
                   <option value="ppO2">ppO2</option>
-                </optgroup>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
               <label htmlFor="unidades_medida.consumo_agua" className="block text-sm font-bold mb-2 mt-2 mr-2">Consumo de Agua</label>
               <select {...register("unidades_medida.consumo_agua")} className="flex mb-1 mt-1 rounded relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select-box select-box">
-                <optgroup label="Consumo de Agua">
+                  <option value="">...</option>
                   <option value="L">L</option>
                   <option value="ml">ml</option>
-                </optgroup>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
               <label htmlFor="unidades_medida.tiempo_actividad_fisica" className="block text-sm font-bold mb-2 mt-2 mr-2">Tiempo de Actividad Física</label>
               <select {...register("unidades_medida.tiempo_actividad_fisica")} className="flex mb-1 mt-1 rounded relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select-box">
-                <optgroup label="Tiempo de Actividad Física">
+                  <option value="">...</option>
                   <option value="min">min</option>
                   <option value="h">h</option>
-                </optgroup>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
               <label htmlFor="unidades_medida.medidas_cintura" className="block text-sm font-bold mb-2 mt-2 mr-2">Medidas de Cintura</label>
               <select {...register("unidades_medida.medidas_cintura")} className="flex mb-1 mt-1 rounded relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select-box">
-                <optgroup label="Medidas de Cintura">
+                  <option value="">...</option>
                   <option value="cm">cm</option>
                   <option value="in">in</option>
-                </optgroup>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
               <label htmlFor="unidades_medida.medidas_cadera" className="block text-sm font-bold mb-2 mt-2 mr-2">Medidas de Cadera</label>
               <select {...register("unidades_medida.medidas_cadera")} className="flex mb-1 mt-1 rounded relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select-box">
-                <optgroup label="Medidas de Cadera">
+                  <option value="">...</option>
                   <option value="cm">cm</option>
                   <option value="in">in</option>
-                </optgroup>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
               <label htmlFor="unidades_medida.capacidad_cardiovascular" className="block text-sm font-bold mb-2 mt-2 mr-2">Capacidad Cardiovascular</label>
               <select {...register("unidades_medida.capacidad_cardiovascular")} className="flex mb-1 mt-1 rounded relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select-box">
-                <optgroup label="Capacidad Cardiovascular">
+                  <option value="">...</option>
                   <option value="ml/kg/min">ml/kg/min</option>
                   <option value="L/min">L/min</option>
-                </optgroup>
               </select>
             </div>
             <div className="mb-4 mt-4 flex flex-wrap justify-between items-center">
               <label htmlFor="unidades_medida.fuerza_muscular" className="block text-sm font-bold mb-2 mt-2 mr-2 rounded-md">Fuerza Muscular</label>
               <select {...register("unidades_medida.fuerza_muscular")} className="flex mb-1 mt-1 rounded relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm select-box select-box">
-                <optgroup label="Fuerza Muscular">
+                  <option value="">...</option>
                   <option value="N">N</option>
                   <option value="kgF">kgF</option>
-                </optgroup>
               </select>
             </div>
           </div>
