@@ -15,17 +15,14 @@ const IndicatorRouter = require('../router/indicator.router.js');
 const IndicatorTypeRouter = require('../router/indicator.type.router.js');
 const UnitsConfigRouter = require('../router/units.config.router.js');
 
-app.get('/', (req, res) => {
-    //Cambiar cuando se esté empezando a desarrollar la app.
-    res.send(res.redirect('/api/health'));
-});
+app.get('/', (req, res) => { res.send(res.redirect('/api/health')) });
+app.use(cors({ origin: 'http://localhost:5173' })); //esto es para permitir que todos los dominios se puedan comunicar en el servidor
 
-app.use(cors({ origin: 'http://localhost:5173' })); //esto es para permitir que todos los dominios se puedan comi¿unicar en el servidor
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
-app.use('/api', health);
 // Inicializador de Rutas
+app.use('/api', health);
 app.use('/api', UserRouter);
 app.use('/api', GenderRouter);
 app.use('/api', EmergencyRouter);

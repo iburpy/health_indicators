@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from "react";
-import { registerRequest, loginRequest } from "../api/auten";
+import { registerRequest, loginRequest, indicatorRequest } from "../api/auten";
 import PropTypes from "prop-types";
 
 export const AuthenContext = createContext();
@@ -24,24 +24,39 @@ export const AutenProvider = ({ children }) => {
             console.log(res.data);
             setUser(res.data);
             setIsAuthenticated(true);
-            setErrors([]); // Clear errors on successful signup
+            setErrors([]);
         } catch (error) {
-            setErrors(error.response.data); // Assuming the errors are in error.response.data
+            setErrors(error.response.data);
             console.log(error.response);
         }
     };
 
     const signin = async(user) => {
-      try{
+      try {
         const res = await loginRequest(user);
-        console.log(res)
-      }catch (error){
-        setErrors(error.response.data)
+        console.log(res.data);
+        setUser(res.data);
+        setIsAuthenticated(true);
+        setErrors([]);
+      } catch (error) {
+        setErrors(error.response.data);
+        console.log(error.response);
       }
-    }
+    };
+
+    const indicator = async (indicadorData) => {
+        try {
+            const res = await indicatorRequest(indicadorData);
+            console.log(res.data);
+            setErrors([]);
+        } catch (error) {
+            setErrors(error.response.data);
+            console.log(error.response);
+        }
+    };
 
     return (
-        <AuthenContext.Provider value={{ signup, user, isAuthenticated, errors,signin }}>
+        <AuthenContext.Provider value={{ signup, signin, user, isAuthenticated, errors, indicator }}>
             {children}
         </AuthenContext.Provider>
     );

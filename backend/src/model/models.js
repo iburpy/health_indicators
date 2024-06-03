@@ -197,7 +197,7 @@ TipoIndicador.init({
 class Indicador extends Model {};
 
 Indicador.init({
-  id: {
+  indicador_id: {
     type: DataTypes.INTEGER,
     primaryKey: true
   },

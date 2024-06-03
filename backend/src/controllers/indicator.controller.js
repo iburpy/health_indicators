@@ -20,7 +20,7 @@ const getIndicators = async (req, res) => {
 
 const getIndicatorById = async (req, res) => {
     try {
-        const indicator = await Indicador.findByPk(req.params.id);
+        const indicator = await Indicador.findByPk(req.params.indicador_id);
         if(!indicator || indicator.length === 0) {
             res.status(404).json({ error: 'Indicador no encontrado' });
         } else {
@@ -57,7 +57,7 @@ const createIndicator = async (req, res) => {
 const updateIndicator = async (req, res) => {
     try {
         const indicator = await Indicador.update(req.body, {
-            where: { id: req.params.id }
+            where: { id: req.params.indicador_id }
         });
         if(!indicator || indicator.length === 0) {
             res.status(404).json({ error: 'Indicador no actualizado' });
@@ -77,7 +77,7 @@ const updateIndicator = async (req, res) => {
 const deleteIndicator = async (req, res) => {
     try {
         const indicator = await Indicador.destroy({
-            where: { id: req.params.id }
+            where: { id: req.params.indicador_id }
         });
         if(!indicator || indicator.length === 0) {
             res.status(404).json({ error: 'Indicador no borrado' });

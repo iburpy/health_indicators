@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+h1, h2, h3 {
+    font-family: 'Oswald';
+}
+
+body {
+    font-family: 'Ubuntu', 'italic';
+}
+
+p {
+    font-family: 'Raleway';
+}
+
+#bg {
+    --tw-bg-opacity: 2;
+    background-color: rgb(226 232 240  / var(--tw-bg-opacity));
+}
+
+.select-box {
+    width: 28%;
+}
