@@ -148,8 +148,11 @@ function RegisterPage() {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="email" className="block text-sm font-bold mb-2 mt-2">
-                  Correo electrónico
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-bold mb-2 mt-2"
+                >
+                  Correo Electrónico:
                 </label>
                 <input
                   type="email"
@@ -178,6 +181,14 @@ function RegisterPage() {
                 {errors?.password?.type === "minLength" && <p>Las contraseñas deben tener mínimo 6 caracteres.</p>}
               </div>
             </div>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              <Link
+                to="/login"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Ya estas Registrado? Inicia Sesión
+              </Link>
+            </p>
             <div>
               <button
                 type="button"
@@ -266,8 +277,10 @@ function RegisterPage() {
               </div>
 
               <div className="mb-4">
-                <label  className="block text-sm font-bold mb-2 mt-2"
-                        htmlFor="contacto_emergencia.parentesco">
+                <label
+                  htmlFor="contacto_emergencia.parentesco"
+                  className="block text-sm font-bold mb-2 mt-2"
+                >
                   Parentesco
                 </label> 
                 <select className="w-full px-3 py-2 border rounded-lg"
@@ -342,7 +355,17 @@ function RegisterPage() {
                 {errors.contacto_emergencia?.email && ( <span className="text-red-500">Este campo es requerido</span> )}
               </div>
             </div>
-            <div className="flex justify-between">
+
+            <p className="mt-2 text-center text-sm text-gray-600">
+              <Link
+                to="/login"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Ya estas Registrado? Inicia Sesión
+              </Link>
+            </p>
+            
+            <div>
               <button
                 type="button"
                 onClick={prevStep}

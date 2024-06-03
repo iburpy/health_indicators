@@ -20,6 +20,7 @@ router.post('/login', login);
 router.post('/logout', authRequired, logout);
 // router.get('/see-users', getUsers);
 router.get('/profile', authRequired, getProfile);
+router.get('/verify', verifyToken);
 router.put('/profile/edit/:num_doc', authRequired, editProfile);
 //router.delete('/profile/delete/:id', deleteProfile);
 

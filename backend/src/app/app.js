@@ -16,7 +16,9 @@ const IndicatorTypeRouter = require('../router/indicator.type.router.js');
 const UnitsConfigRouter = require('../router/units.config.router.js');
 
 app.get('/', (req, res) => { res.send(res.redirect('/api/health')) });
-app.use(cors({ origin: 'http://localhost:5173' })); //esto es para permitir que todos los dominios se puedan comunicar en el servidor
+app.use(cors({ origin: 'http://localhost:5173',
+    credentials: true
+ })); //esto es para permitir que todos los dominios se puedan comunicar en el servidor
 
 app.use(morgan('dev'));
 app.use(express.json());
