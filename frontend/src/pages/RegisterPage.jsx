@@ -160,7 +160,10 @@ function RegisterPage() {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="email" className="block text-sm font-bold mb-2 mt-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-bold mb-2 mt-2"
+                >
                   Correo Electrónico:
                 </label>
                 <input
@@ -193,11 +196,13 @@ function RegisterPage() {
               </div>
             </div>
             <p className="mt-2 text-center text-sm text-gray-600">
-          <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
-            Ya estas Registrado? 
-            Inicia Sesión
-          </Link>
-          </p>
+              <Link
+                to="/login"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Ya estas Registrado? Inicia Sesión
+              </Link>
+            </p>
             <div>
               <button
                 type="submit"
@@ -281,7 +286,8 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="contacto_emergencia.telefono"
-                  className="block text-sm font-bold mb-2 mt-2">
+                  className="block text-sm font-bold mb-2 mt-2"
+                >
                   Teléfono
                 </label>
                 <input
@@ -300,7 +306,8 @@ function RegisterPage() {
               <div className="mb-4">
                 <label
                   htmlFor="contacto_emergencia.parentesco"
-                  className="block text-sm font-bold mb-2 mt-2">
+                  className="block text-sm font-bold mb-2 mt-2"
+                >
                   Parentesco
                 </label>
                 <input
@@ -354,6 +361,16 @@ function RegisterPage() {
                 )}
               </div>
             </div>
+
+            <p className="mt-2 text-center text-sm text-gray-600">
+              <Link
+                to="/login"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Ya estas Registrado? Inicia Sesión
+              </Link>
+            </p>
+            
             <div>
               <button
                 type="submit"
