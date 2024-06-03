@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { registerRequest, loginRequest, indicatorRequest, verifyTokenRequest } from "../api/auten";
+import { registerRequest, loginRequest, indicatorRequest, profileRequest, updateProfileRequest, verifyTokenRequest } from "../api/auten";
 import PropTypes from "prop-types";
 import Cookies from 'js-cookie';
 
@@ -59,6 +59,27 @@ export const AutenProvider = ({ children }) => {
         }
     };
 
+    const profile = async (num_doc) => {
+        try {
+            const res = await profileRequest(num_doc);
+            setUser(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const updateProfile = async (userData) => {
+        try {
+            const res = await updateProfileRequest(userData);
+            setUser(res.data);
+            setErrors([]);
+        } catch (error) {
+            setErrors(error.response.data);
+            console.log(error.response);
+        }
+    };
+
+
     useEffect(() => {
         if (errors.length > 0) {
             const timer = setTimeout(() => {
@@ -99,8 +120,8 @@ export const AutenProvider = ({ children }) => {
     }
 
     return (
-        <AuthenContext.Provider value={{ signup, signin, user, isAuthenticated, errors, indicator, loading }}>
-            {children}
+        <AuthenContext.Provider value={{ signup, signin, indicator, user, profile, updateProfile, isAuthenticated, errors, loading }}>
+            { children }
         </AuthenContext.Provider>
     );
 };

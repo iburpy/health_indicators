@@ -114,8 +114,8 @@ function IndicadorForm() {
                         </button>
                     </div>
                 </form>
-                <p className="mt-2 text-center text-sm text-gray-600">¿Volver al inicio?&nbsp;
-                    <Link to="/" className="font-medium text-indigo-600 hover:text-indigo-500">
+                <p className="mt-2 text-center text-sm text-gray-600">¿Volver al perfil?&nbsp;
+                    <Link to={`/profile/${user?.num_doc}`} className="font-medium text-indigo-600 hover:text-indigo-500">
                         ¡Haz clic aquí!
                     </Link>
                 </p>

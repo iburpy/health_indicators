@@ -146,13 +146,12 @@ function RegisterPage() {
                 </select>
                 {errors.generos_id && ( <span className="text-red-500">Este campo es requerido</span> )}
               </div>
-
               <div className="mb-4">
                 <label
                   htmlFor="email"
                   className="block text-sm font-bold mb-2 mt-2"
                 >
-                  Correo Electrónico:
+                  Correo electrónico
                 </label>
                 <input
                   type="email"
@@ -175,20 +174,12 @@ function RegisterPage() {
                   type="password"
                   {...register("password", { required: true, minLength: 6 })}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="Contraseña"
+                  placeholder="Contraseña. Mínimo 6 caracteres"
                 />
                 {errors?.password?.type === "required" && <p>Este campo es requerido.</p>}
                 {errors?.password?.type === "minLength" && <p>Las contraseñas deben tener mínimo 6 caracteres.</p>}
               </div>
             </div>
-            <p className="mt-2 text-center text-sm text-gray-600">
-              <Link
-                to="/login"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Ya estas Registrado? Inicia Sesión
-              </Link>
-            </p>
             <div>
               <button
                 type="button"

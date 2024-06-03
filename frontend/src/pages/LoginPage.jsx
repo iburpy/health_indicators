@@ -10,7 +10,7 @@ function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { signin, signinErrors = [] } = useAuten();
+  const { user, isAuthenticated, signin, signinErrors = [] } = useAuten();
   const navigate = useNavigate();
 
   useEffect(() => { document.title = "Inicio de sesión" }, []);
@@ -18,11 +18,16 @@ function LoginPage() {
   const onSubmit = async (data) => {
   try {
     await signin(data);
-    navigate('/create-indicator');
   } catch (error) {
     console.error('Error de autenticación:', error);
   }
 };
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      navigate(`/profile/${user.num_doc}`);
+    }
+  }, [isAuthenticated, user, navigate]);
 
 
   return (

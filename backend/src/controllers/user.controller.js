@@ -120,7 +120,7 @@ const logout = (req, res) => {
 
 const getProfile = async (req, res) => {
     try {
-        const user = await Usuario.findByPk(req.user.num_doc);
+        const user = await Usuario.findByPk(req.params.num_doc);
         if(!user) res.status(404).json({ error: 'Usuario no encontrado' });
         else {
             res.setHeader('Content-Type', 'application/json');
