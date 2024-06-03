@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAuten } from "../context/AutenContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../assets/fonts/fonts.css'
 
 function LoginPage() {
@@ -10,13 +10,20 @@ function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { signin, signinErrors = [] } = useAuten();  // Asegurarse de que signinErrors sea un array por defecto
+  const { signin, signinErrors = [] } = useAuten();
+  const navigate = useNavigate();
 
   useEffect(() => { document.title = "Inicio de sesión" }, []);
 
-  const onSubmit = (data) => {
-    signin(data);
-  };
+  const onSubmit = async (data) => {
+  try {
+    await signin(data);
+    navigate('/create-indicator');
+  } catch (error) {
+    console.error('Error de autenticación:', error);
+  }
+};
+
 
   return (
     <div className="flex bg-slate-200  min-h-screen items-center justify-center px-6 py-12 lg:px-8">
