@@ -1,6 +1,5 @@
 const { z } = require('zod');
 
-// Esquema para el registro de usuarios
 const registerSchema = z.object({
     num_doc: z.string().min(1).max(50),
     nombre: z.string().min(1).max(50),
@@ -13,10 +12,9 @@ const registerSchema = z.object({
     unidades_medida_id: z.number().int(),
 });
 
-// Esquema para el inicio de sesión
 const loginSchema = z.object({
     email: z.string().email(),
-    password: z.string().min(1).max(100),
+    password: z.string().min(6).max(100),
 });
 
 module.exports = { registerSchema, loginSchema };
