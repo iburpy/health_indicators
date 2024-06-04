@@ -1,11 +1,13 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useContext, useEffect } from "react";
-import { registerRequest, loginRequest, indicatorRequest, profileRequest, updateProfileRequest, verifyTokenRequest } from "../api/auten";
+import axios from 'axios';
+import { registerRequest, loginRequest, indicatorRequest, profileRequest, updateProfileRequest, verifyTokenRequest, createObjetivoRequest } from "../api/auten";
 import PropTypes from "prop-types";
 import Cookies from 'js-cookie';
 
 export const AuthenContext = createContext();
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAuten = () => {
     const context = useContext(AuthenContext);
     if (!context) {
@@ -19,6 +21,7 @@ export const AutenProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [submitErrors, setSubmitErrors] = useState([]); 
 
     const signup = async (user) => {
         try {
@@ -28,7 +31,7 @@ export const AutenProvider = ({ children }) => {
             setIsAuthenticated(true);
             setErrors([]);
         } catch (error) {
-            setErrors(error.response.data);
+            setErrors([error.response.data]);
             console.log(error.response);
         }
     };
@@ -42,9 +45,10 @@ export const AutenProvider = ({ children }) => {
             setErrors([]);
         } catch (error) {
             if (Array.isArray(error.response.data)) {
-                return setErrors(error.response.data);
+                setErrors(error.response.data);
+            } else {
+                setErrors([error.response.data]);
             }
-            setErrors([error.response.data]);
         }
     };
 
@@ -54,14 +58,35 @@ export const AutenProvider = ({ children }) => {
             console.log(res.data);
             setErrors([]);
         } catch (error) {
-            setErrors(error.response.data);
+            setErrors([error.response.data]);
             console.log(error.response);
         }
     };
 
-    const profile = async (num_doc) => {
+    const createObjetivo = async (objetivoData) => {
         try {
-            const res = await profileRequest(num_doc);
+            const res = await createObjetivoRequest(objetivoData); 
+            console.log(res.data);
+            setErrors([]); 
+        } catch (error) {
+            setErrors([error.response.data]);
+            console.log(error.response);
+        }
+    };
+
+    const getIndicadores = async (num_doc) => {
+        try {
+            const response = await axios.get(`/api/indicadores?user=${num_doc}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error al obtener los indicadores:", error);
+            return [];
+        }
+    };
+
+    const profile = async () => {
+        try {
+            const res = await profileRequest(user.num_doc); 
             setUser(res.data);
         } catch (error) {
             console.log(error);
@@ -74,11 +99,10 @@ export const AutenProvider = ({ children }) => {
             setUser(res.data);
             setErrors([]);
         } catch (error) {
-            setErrors(error.response.data);
+            setErrors([error.response.data]);
             console.log(error.response);
         }
     };
-
 
     useEffect(() => {
         if (errors.length > 0) {
@@ -120,8 +144,8 @@ export const AutenProvider = ({ children }) => {
     }
 
     return (
-        <AuthenContext.Provider value={{ signup, signin, indicator, user, profile, updateProfile, isAuthenticated, errors, loading }}>
-            { children }
+        <AuthenContext.Provider value={{ signup, signin, indicator, createObjetivo, getIndicadores, user, profile, updateProfile, isAuthenticated, errors, loading, submitErrors }}>
+            {children}
         </AuthenContext.Provider>
     );
 };

@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage'
 import IndicatorForm from "./pages/IndicatorFormPage";
 import ProfilePage from "./pages/ProfilePage";
 import HomePage from "./pages/HomePage";
+import CreateObjetives from "./pages/CreateObjetives";
 import ProtectedRoute from "./ProtectedRoute";
 
 export default function App() {
@@ -15,6 +16,8 @@ export default function App() {
           <Route path="/" element={<HomePage/>}/>
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/register" element={<RegisterPage/>}/>
+          <Route path="/create-objetives" element={<CreateObjetives/>}/>
+
           <Route element={<ProtectedRoute/>}>
               <Route path="/create-indicator" element={<IndicatorForm/>}></Route>
               <Route path="/profile/:num_doc" element={<ProfilePage/>}></Route>
