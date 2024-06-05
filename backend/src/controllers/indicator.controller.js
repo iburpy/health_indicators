@@ -36,6 +36,26 @@ const getIndicatorById = async (req, res) => {
         }
 };
 
+const getIndicatorsByNumDoc = async (req, res) => {
+    try {
+        const indicators = await Indicador.findAll({
+            where: { usuarios_num_doc: req.params.num_doc }
+        });
+        if (!indicators || indicators.length === 0) {
+            res.status(404).json({ error: 'Indicadores no encontrados para el número de documento proporcionado' });
+        } else {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).send(
+                JSON.stringify({ found: indicators.length, indicators },
+                    null, 2
+                ));
+        }
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+        console.log(`Error al encontrar indicadores por número de documento: ${error}`);
+    }
+};
+
 const createIndicator = async (req, res) => {
     try {
         const indicator = await Indicador.create(req.body);
@@ -95,7 +115,8 @@ const deleteIndicator = async (req, res) => {
 
 module.exports = { 
     getIndicators, 
-    getIndicatorById, 
+    getIndicatorById,
+    getIndicatorsByNumDoc,
     createIndicator, 
     updateIndicator, 
     deleteIndicator 

@@ -12,9 +12,9 @@ const {
 router.use(express.json());
 
 router.get('/indicators/types', getIndicatorTypes);
-router.get('/indicators/types/:id', getIndicatorTypeById);
+router.get('/indicators/types/:tipo_id', getIndicatorTypeById);
 router.post('/indicators/types/create', createIndicatorType);
-router.put('/indicators/types/edit:id', updateIndicatorType);
-router.delete('/indicators/types/delete/:id', deleteIndicatorType);
+router.put('/indicators/types/edit:tipo_id', updateIndicatorType);
+router.delete('/indicators/types/delete/:tipo_id', deleteIndicatorType);
 
 module.exports = router;

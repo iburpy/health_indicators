@@ -29,7 +29,7 @@ function Profiles() {
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Perfil de Usuario</h2>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <p><strong>Nombre:</strong> {profile.nombre} {profile.apellido}</p>
+            {/* <p><strong>Nombre:</strong> {user.nombre} {user.apellido}</p> */}
             <p><strong>Correo electrónico:</strong> {user.email}</p>
             <p><strong>Número de documento:</strong> {user.num_doc}</p> {/* Mostrar el número de documento */}
           </div>

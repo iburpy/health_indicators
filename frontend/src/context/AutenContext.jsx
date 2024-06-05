@@ -74,12 +74,12 @@ export const AutenProvider = ({ children }) => {
         }
     };
 
-    const getIndicadores = async (num_doc) => {
+    const getIndicatorsByNumDoc = async (num_doc) => {
         try {
-            const response = await axios.get(`/indicators?usuarios_num_doc=${num_doc}`);
-            return response.data;
+            const res = await axios.get(`/indicator/${num_doc}`);
+            return res.data.indicators;
         } catch (error) {
-            console.error("Error al obtener los indicadores:", error);
+            console.error("Error al obtener los indicadores por número de documento:", error);
             return [];
         }
     };
@@ -144,7 +144,7 @@ export const AutenProvider = ({ children }) => {
     }
 
     return (
-        <AuthenContext.Provider value={{ signup, signin, indicator, createGoal, getIndicadores, user, profile, updateProfile, isAuthenticated, errors, loading, submitErrors }}>
+        <AuthenContext.Provider value={{ signup, signin, indicator, createGoal, getIndicatorsByNumDoc, user, profile, updateProfile, isAuthenticated, errors, loading, submitErrors }}>
             {children}
         </AuthenContext.Provider>
     );

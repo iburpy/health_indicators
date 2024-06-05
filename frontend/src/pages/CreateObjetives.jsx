@@ -8,9 +8,8 @@ import '../assets/fonts/fonts.css';
 function MetaSaludForm() {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const navigate = useNavigate();
-    const { user, isAuthenticated, submitErrors = [], getIndicadores, createGoal } = useAuten();
+    const { user, isAuthenticated, submitErrors = [], getIndicatorsByNumDoc, createGoal } = useAuten();
     const [indicadores, setIndicadores] = useState([]);
-    const [successMessage, setSuccessMessage] = useState('');
 
     useEffect(() => { document.title = "Registro de Metas de Salud"; }, []);
 
@@ -20,7 +19,7 @@ function MetaSaludForm() {
         } else {
             const fetchIndicadores = async () => {
                 try {
-                    const userIndicadores = await getIndicadores(indicadores.user.num_doc);
+                    const userIndicadores = await getIndicatorsByNumDoc(user.num_doc);
                     setIndicadores(userIndicadores);
                 } catch (error) {
                     console.error(error);
@@ -29,18 +28,14 @@ function MetaSaludForm() {
             };
             fetchIndicadores();
         }
-    }, [isAuthenticated, navigate, user, getIndicadores, indicadores]);
+    }, [isAuthenticated, navigate, user, getIndicatorsByNumDoc, indicadores]);
 
     const onSubmit = async (data) => {
         const metaSaludData = {
             ...data,
             fecha_creacion: new Date(),
         };
-        const response = await createGoal(metaSaludData);
-        if (response.success) {
-            setSuccessMessage('Meta de salud registrada con éxito');
-            reset();
-        }
+        await createGoal(metaSaludData);
     };
 
     return (
@@ -58,13 +53,6 @@ function MetaSaludForm() {
                             <span className="block sm:inline">{error}</span>
                         </div>
                     ))}
-
-                    {successMessage && (
-                        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                            <strong className="font-bold">¡Éxito!</strong>
-                            <span className="block sm:inline">{successMessage}</span>
-                        </div>
-                    )}
 
                     <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
                         <div className="rounded-md shadow-sm -space-y-px">
