@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuten } from "../context/AutenContext";
 
 function Navbar() {
-  const { user, isAuthenticated } = useAuten();
+  const { user, isAuthenticated, signout } = useAuten();
 
   return (
     <nav className="bg-gray-800 p-4">
@@ -21,6 +21,9 @@ function Navbar() {
             </li>
             <li>
               <Link to="/create-objetives" className="text-white">Crear Objetivo</Link>
+            </li>
+            <li>
+              <button onClick={signout} className="text-white">Cerrar Sesión</button>
             </li>
           </>
         )}
