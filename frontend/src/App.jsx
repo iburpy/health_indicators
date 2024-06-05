@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import CreateObjetives from "./pages/CreateObjetives";
 import ProtectedRoute from "./ProtectedRoute";
 
+
 export default function App() {
   return (
     <AutenProvider>
