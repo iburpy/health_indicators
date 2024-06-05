@@ -20,7 +20,7 @@ function MetaSaludForm() {
         } else {
             const fetchIndicadores = async () => {
                 try {
-                    const userIndicadores = await getIndicadores(user.num_doc);
+                    const userIndicadores = await getIndicadores(indicadores.indicador_id);
                     setIndicadores(userIndicadores);
                 } catch (error) {
                     console.error(error);
@@ -29,7 +29,7 @@ function MetaSaludForm() {
             };
             fetchIndicadores();
         }
-    }, [isAuthenticated, navigate, user, getIndicadores]);
+    }, [isAuthenticated, navigate, user, getIndicadores, indicadores]);
 
     const onSubmit = async (data) => {
         const metaSaludData = {
@@ -39,7 +39,7 @@ function MetaSaludForm() {
         const response = await createObjetivo(metaSaludData);
         if (response.success) {
             setSuccessMessage('Meta de salud registrada con éxito');
-            reset();  // Limpiar el formulario
+            reset();
         }
     };
 

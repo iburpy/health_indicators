@@ -1,13 +1,10 @@
-// src/pages/RegisterPage.js
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuten } from "../context/AutenContext";
 import { useNavigate, Link } from "react-router-dom";
-import Navbar from '../components/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { MdAssignmentAdd } from "react-icons/md";
-// import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 import '../assets/fonts/fonts.css';
 
@@ -39,7 +36,6 @@ function RegisterPage() {
 
   return (
     <div>
-      <Navbar />
       <div id="bg" className="flex bg-slate-200 min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           {/* Barra de Progreso del Formulario */}
@@ -124,12 +120,11 @@ function RegisterPage() {
                   </label>
                   <input
                     type="date"
-                    {...register("fecha_de_nacimiento", { required: true })}
+                    {...register("fecha_de_nacimiento", { required: true, valueAsDate: true })}
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                   {errors.fecha_de_nacimiento && (<span className="text-red-500">Este campo es requerido</span>)}
                 </div>
-
                 <div className="mb-4">
                   <label
                     htmlFor="generos_id"
@@ -138,7 +133,7 @@ function RegisterPage() {
                   </label>
                   <select
                     {...register("generos_id", { required: true, valueAsNumber: true })}
-                    defaultValue=""
+                    
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   >
                     <option value="">Selecciona tu género</option>
@@ -181,14 +176,6 @@ function RegisterPage() {
                   {errors?.password?.type === "minLength" && <p>Las contraseñas deben tener mínimo 6 caracteres.</p>}
                 </div>
               </div>
-              <p className="mt-2 text-center text-sm text-gray-600">
-                <Link
-                  to="/login"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Ya estas Registrado? Inicia Sesión
-                </Link>
-              </p>
               <div>
                 <button
                   type="button"
@@ -249,7 +236,7 @@ function RegisterPage() {
                     Género
                   </label>
                   <select
-                    defaultValue=""
+                    
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     {...register("contacto_emergencia.generos_id", { required: true, valueAsNumber: true })}>
                     <option value="">Selecciona el género de tu contacto...</option>
@@ -282,7 +269,6 @@ function RegisterPage() {
                     Parentesco
                   </label>
                   <select className="w-full px-3 py-2 border rounded-lg"
-                    defaultValue=""
                     {...register("contacto_emergencia.parentesco", { required: true })}>
                     <option value="">Selecciona el parentesco de tu contacto</option>
                     <optgroup label="Por consanguinidad">
@@ -317,7 +303,6 @@ function RegisterPage() {
                   </label>
                   <select
                     className="w-full px-3 py-2 border rounded-lg"
-                    defaultValue=""
                     onChange={handleChange} value={selectedRelation}>
                     <option value="">Selecciona tu relación con tu contacto</option>
                     <option value="Amigo/a">Amigo o Amiga</option>
@@ -353,15 +338,6 @@ function RegisterPage() {
                   {errors.contacto_emergencia?.email && (<span className="text-red-500">Este campo es requerido</span>)}
                 </div>
               </div>
-
-              <p className="mt-2 text-center text-sm text-gray-600">
-                <Link
-                  to="/login"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Ya estas Registrado? Inicia Sesión
-                </Link>
-              </p>
 
               <div>
                 <button

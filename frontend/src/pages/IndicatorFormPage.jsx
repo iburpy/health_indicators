@@ -120,7 +120,6 @@ function IndicadorForm() {
                                 />
                             </div>
                         </div>
-
                         <div>
                             <button
                                 type="submit"

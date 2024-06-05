@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAuten } from "../context/AutenContext";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from '../components/Navbar';
 import '../assets/fonts/fonts.css'
 
 function LoginPage() {
@@ -32,7 +31,6 @@ function LoginPage() {
 
   return (
     <>
-      <Navbar />
       <div className="flex bg-slate-200 min-h-screen items-center justify-center px-6 py-12 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>

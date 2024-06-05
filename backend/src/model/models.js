@@ -215,7 +215,11 @@ Indicador.init({
   },
   usuarios_num_doc: {
     type: DataTypes.STRING(50),
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: Usuario,
+      key: 'num_doc',
+    }
   },
   notas_adicionales: {
     type: DataTypes.STRING(500)

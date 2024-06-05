@@ -16,11 +16,10 @@ export default function App() {
           <Route path="/" element={<HomePage/>}/>
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/register" element={<RegisterPage/>}/>
-          <Route path="/create-objetives" element={<CreateObjetives/>}/>
-
           <Route element={<ProtectedRoute/>}>
               <Route path="/create-indicator" element={<IndicatorForm/>}></Route>
               <Route path="/profile/:num_doc" element={<ProfilePage/>}></Route>
+              <Route path="/create-objetives" element={<CreateObjetives/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
