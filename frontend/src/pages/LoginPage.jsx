@@ -88,7 +88,7 @@ function LoginPage() {
           </form>
           <p className="mt-2 text-center text-sm text-gray-600">¿No tienes cuenta?&nbsp;
             <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
-              ¡Crea una aquí!
+              Créate una aquí
             </Link>
           </p>
         </div>

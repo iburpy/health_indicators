@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar";
 import '../assets/fonts/fonts.css';
 
 function MetaSaludForm() {
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const { user, isAuthenticated, submitErrors = [], getIndicatorsByNumDoc, createGoal } = useAuten();
     const [indicadores, setIndicadores] = useState([]);
@@ -144,7 +144,7 @@ function MetaSaludForm() {
                     </form>
                     <p className="mt-2 text-center text-sm text-gray-600">¿Volver al perfil?&nbsp;
                         <Link to={`/profile/${user?.num_doc}`} className="font-medium text-indigo-600 hover:text-indigo-500">
-                            ¡Haz clic aquí!
+                            Haz clic aquí.
                         </Link>
                     </p>
                 </div>
