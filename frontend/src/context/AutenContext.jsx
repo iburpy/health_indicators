@@ -10,9 +10,12 @@ export const AuthenContext = createContext();
 
 export const useAuten = () => {
     const context = useContext(AuthenContext);
+    console.log(context)
     if (!context) {
         throw new Error('useAuten must be used within an AuthenProvider');
+       
     }
+
     return context;
 };
 
@@ -42,6 +45,7 @@ export const AutenProvider = ({ children }) => {
             console.log(res.data);
             setUser(res.data);
             setIsAuthenticated(true);
+            localStorage.setItem("token",res.data.token);
             setErrors([]);
         } catch (error) {
             if (Array.isArray(error.response.data)) {
@@ -85,12 +89,15 @@ export const AutenProvider = ({ children }) => {
     };
 
     const profile = async () => {
+       if(user.num_doc){
         try {
+            console.log({user})
             const res = await profileRequest(user.num_doc); 
             setUser(res.data);
         } catch (error) {
             console.log(error);
         }
+       }
     };
 
     const updateProfile = async (userData) => {
@@ -115,9 +122,10 @@ export const AutenProvider = ({ children }) => {
 
     useEffect(() => {
         async function checkLogin() {
-            const cookies = Cookies.get();
-
-            if (!cookies.token) {
+            const token = localStorage.getItem("token");
+            console.log("hola mundo")
+            console.log(token)
+            if (!token) {
                 setIsAuthenticated(false);
                 setUser(null);
                 setLoading(false);
@@ -125,7 +133,9 @@ export const AutenProvider = ({ children }) => {
             }
 
             try {
-                const res = await verifyTokenRequest(cookies.token);
+                const res = await verifyTokenRequest(token);
+                console.log(res)
+                console.log(token)
                 setIsAuthenticated(true);
                 setUser(res.data);
             } catch (error) {
@@ -136,7 +146,7 @@ export const AutenProvider = ({ children }) => {
                 setLoading(false);
             }
         }
-        checkLogin();
+        checkLogin().then(data => console(data));
     }, []);
 
     if (loading) {

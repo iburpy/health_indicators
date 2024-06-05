@@ -1,4 +1,4 @@
-const JWT_SECRET = require('../libs/token.config.js');
+const {JWT_SECRET} = require('../libs/token.config.js');
 const saltRounds = 10;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -92,11 +92,15 @@ const login = async (req, res) => {
 };
 
 const verifyToken = async (req, res) => {
-    const { token } = req.cookies;
+    const { token } = req.headers;
+    console.log(req.headers.token)
+    console.log(JWT_SECRET)
     if (!token) return res.status(401).json({message:"No Autorizado"});
     jwt.verify(token, JWT_SECRET, async (err, user) => {
+        console.log(err)
       if (err) return res.status(401).json({message:"No Autorizado"});
-      const suserFound = await Usuario.findOne({ where: { num_doc: user.num_doc } });
+      console.log({user})
+      const suserFound = await Usuario.findOne({ where: { num_doc: user.numDoc } });
       if (!suserFound) return res.status(401).json({message:"No Autorizado"});
   
       return res.json({
