@@ -12,7 +12,7 @@ function Profiles() {
     if (!isAuthenticated) {
       navigate('/login');
     } else {
-      profile(); // Fetch the user profile data
+      profile();
     }
   }, [isAuthenticated, navigate, profile]);
 

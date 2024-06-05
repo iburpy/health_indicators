@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAuten } from "../context/AutenContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,13 +9,11 @@ function IndicadorForm() {
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors },
     } = useForm();
     
     const navigate = useNavigate();
     const { user, isAuthenticated, submitErrors = [], indicator } = useAuten();
-    const [successMessage, setSuccessMessage] = useState('');
 
     useEffect(() => { document.title = "Registro de Indicadores"; }, []);
 
@@ -25,11 +23,7 @@ function IndicadorForm() {
             fecha_hora_registro: new Date(),
             usuarios_num_doc: user?.num_doc, 
         };
-        const response = await indicator(indicadorData);
-        if (response.success) {
-            setSuccessMessage('Indicador registrado con éxito');
-            reset(); 
-        }
+        await indicator(indicadorData);
     };
 
     useEffect(() => {
@@ -53,14 +47,6 @@ function IndicadorForm() {
                             <span className="block sm:inline">{error}</span>
                         </div>
                     ))}
-
-                    {successMessage && (
-                        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                            <strong className="font-bold">¡Éxito!</strong>
-                            <span className="block sm:inline">{successMessage}</span>
-                        </div>
-                    )}
-
                     <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div className="mb-4">  
@@ -131,7 +117,7 @@ function IndicadorForm() {
                     </form>
                     <p className="mt-2 text-center text-sm text-gray-600">¿Volver al perfil?&nbsp;
                         <Link to={`/profile/${user?.num_doc}`} className="font-medium text-indigo-600 hover:text-indigo-500">
-                            ¡Haz clic aquí!
+                            Haz clic aquí.
                         </Link>
                     </p>
                 </div>
