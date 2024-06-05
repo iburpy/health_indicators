@@ -129,8 +129,8 @@ export const AutenProvider = ({ children }) => {
     useEffect(() => {
         async function checkLogin() {
             const token = localStorage.getItem("token");
-            console.log("hola mundo")
-            console.log(token)
+            console.log("hola mundo");
+            console.log(token);
             if (!token) {
                 setIsAuthenticated(false);
                 setUser(null);
@@ -152,7 +152,7 @@ export const AutenProvider = ({ children }) => {
                 setLoading(false);
             }
         }
-        checkLogin().then(data => console(data));
+        checkLogin();
     }, []);
 
     if (loading) {

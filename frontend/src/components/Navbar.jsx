@@ -14,7 +14,7 @@ function Navbar() {
         {isAuthenticated && user && (
           <>
             <li>
-              <Link to={`/profile/${user.num_doc}`} className="text-white">Perfil</Link>
+              <Link to={`/profile/${user.numDoc}`} className="text-white">Perfil</Link>
             </li>
             <li>
               <Link to="/create-indicator" className="text-white">Crear Indicador</Link>

@@ -31,7 +31,7 @@ function Profiles() {
           <div className="bg-white p-6 rounded-lg shadow-lg">
             {/* <p><strong>Nombre:</strong> {user.nombre} {user.apellido}</p> */}
             <p><strong>Correo electrónico:</strong> {user.email}</p>
-            <p><strong>Número de documento:</strong> {user.num_doc}</p> {/* Mostrar el número de documento */}
+            <p><strong>Número de documento:</strong> {user.numDoc}</p> {/* Mostrar el número de documento */}
           </div>
         </div>
       </div>

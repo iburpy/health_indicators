@@ -25,7 +25,7 @@ function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated && user) {
-      navigate(`/profile/${user.num_doc}`);
+      navigate(`/profile/${user.numDoc}`);
     }
   }, [isAuthenticated, user, navigate]);
 

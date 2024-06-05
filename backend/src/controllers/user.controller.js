@@ -82,10 +82,20 @@ const login = async (req, res) => {
         const passMatch = await bcrypt.compare(password, userFound.password);
         if (!passMatch) return res.status(401).json({ message: 'La contraseña es incorrecta.' });
 
-        const token = await createAccessToken({ numDoc: userFound.num_doc, email: userFound.email });
+        const token = await createAccessToken({ 
+            numDoc: userFound.num_doc,
+            email: userFound.email,
+            name: `${userFound.nombre} ${userFound.apellido}`,
+            birthdate: userFound.fecha_de_nacimiento,
+        });
         res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' });
 
-        res.json({num_doc: userFound.num_doc, email: userFound.email, token: token});
+        res.json({
+            numDoc: userFound.num_doc,
+            email: userFound.email,
+            name: `${userFound.nombre} ${userFound.apellido}`,
+            birthdate: userFound.fecha_de_nacimiento,
+            token: token});
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -100,15 +110,17 @@ const verifyToken = async (req, res) => {
         console.log(err)
       if (err) return res.status(401).json({message:"No Autorizado"});
       console.log({user})
-      const suserFound = await Usuario.findOne({ where: { num_doc: user.numDoc } });
-      if (!suserFound) return res.status(401).json({message:"No Autorizado"});
+      const UserFound = await Usuario.findOne({ where: { num_doc: user.numDoc } });
+      if (!UserFound) return res.status(401).json({message:"No Autorizado"});
   
-      return res.json({
-        numDoc: suserFound.num_doc,
-        name: suserFound.name,
-        email: suserFound.email,
-        token: token
-      });
+      res.status(200).send(JSON.stringify({ 
+                found: {
+                    doc: UserFound.num_doc,
+                    name: `${UserFound.nombre} ${UserFound.apellido}`,
+                    email: UserFound.email,
+                    birthdate: UserFound.fecha_de_nacimiento,
+                } 
+            }, null, 2))
     });
 };
 
@@ -125,11 +137,24 @@ const logout = (req, res) => {
 const getProfile = async (req, res) => {
     try {
         const user = await Usuario.findByPk(req.params.num_doc);
+        const contacto_emergencia = await ContactoEmergencia.findOne({ where: { num_doc: user.contacto_emergencia_num_doc } });
+        const genero = await Genero.findByPk(user.generos_id);
+        const unidades_medida = await UnidadMedida.findByPk(user.unidades_medida_id);
         if(!user) res.status(404).json({ error: 'Usuario no encontrado' });
         else {
             res.setHeader('Content-Type', 'application/json');
             console.log(user);
-            res.status(200).send(JSON.stringify({ found: user }, null, 2))
+            res.status(200).send(JSON.stringify({ 
+                found: {
+                    doc: user.num_doc,
+                    name: `${user.nombre} ${user.apellido}`,
+                    email: user.email,
+                    birthdate: user.fecha_de_nacimiento,
+                    gender: genero.nombre,
+                    emergencyContact: { contacto_emergencia },
+                    unitsConfig: { unidades_medida }
+                } 
+            }, null, 2))
         }
     } catch (error) {
         res.status(400).json({ error: error.message });
