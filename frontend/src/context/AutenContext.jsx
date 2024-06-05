@@ -146,7 +146,7 @@ export const AutenProvider = ({ children }) => {
                 setLoading(false);
             }
         }
-        checkLogin();
+        checkLogin().then(data => console.log(data));
     }, []);
 
     if (loading) {
