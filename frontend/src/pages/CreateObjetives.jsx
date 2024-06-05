@@ -8,7 +8,7 @@ import '../assets/fonts/fonts.css';
 function MetaSaludForm() {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const navigate = useNavigate();
-    const { user, isAuthenticated, submitErrors = [], getIndicadores, createObjetivo } = useAuten();
+    const { user, isAuthenticated, submitErrors = [], getIndicadores, createGoal } = useAuten();
     const [indicadores, setIndicadores] = useState([]);
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -20,7 +20,7 @@ function MetaSaludForm() {
         } else {
             const fetchIndicadores = async () => {
                 try {
-                    const userIndicadores = await getIndicadores(indicadores.indicador_id);
+                    const userIndicadores = await getIndicadores(indicadores.user.num_doc);
                     setIndicadores(userIndicadores);
                 } catch (error) {
                     console.error(error);
@@ -36,7 +36,7 @@ function MetaSaludForm() {
             ...data,
             fecha_creacion: new Date(),
         };
-        const response = await createObjetivo(metaSaludData);
+        const response = await createGoal(metaSaludData);
         if (response.success) {
             setSuccessMessage('Meta de salud registrada con éxito');
             reset();

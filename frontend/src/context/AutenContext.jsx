@@ -2,7 +2,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useContext, useEffect } from "react";
 import axios from 'axios';
-import { registerRequest, loginRequest, indicatorRequest, profileRequest, updateProfileRequest, verifyTokenRequest, createObjetivoRequest } from "../api/auten";
+import { registerRequest, loginRequest, indicatorRequest, profileRequest, updateProfileRequest, verifyTokenRequest, createGoalRequest } from "../api/auten";
 import PropTypes from "prop-types";
 import Cookies from 'js-cookie';
 
@@ -63,9 +63,9 @@ export const AutenProvider = ({ children }) => {
         }
     };
 
-    const createObjetivo = async (objetivoData) => {
+    const createGoal = async (objetivoData) => {
         try {
-            const res = await createObjetivoRequest(objetivoData); 
+            const res = await createGoalRequest(objetivoData); 
             console.log(res.data);
             setErrors([]); 
         } catch (error) {
@@ -76,7 +76,7 @@ export const AutenProvider = ({ children }) => {
 
     const getIndicadores = async (num_doc) => {
         try {
-            const response = await axios.get(`/api/indicadores?user=${num_doc}`);
+            const response = await axios.get(`/indicators?usuarios_num_doc=${num_doc}`);
             return response.data;
         } catch (error) {
             console.error("Error al obtener los indicadores:", error);
@@ -144,7 +144,7 @@ export const AutenProvider = ({ children }) => {
     }
 
     return (
-        <AuthenContext.Provider value={{ signup, signin, indicator, createObjetivo, getIndicadores, user, profile, updateProfile, isAuthenticated, errors, loading, submitErrors }}>
+        <AuthenContext.Provider value={{ signup, signin, indicator, createGoal, getIndicadores, user, profile, updateProfile, isAuthenticated, errors, loading, submitErrors }}>
             {children}
         </AuthenContext.Provider>
     );
