@@ -56,6 +56,12 @@ export const AutenProvider = ({ children }) => {
         }
     };
 
+    const signout = () => {
+        localStorage.removeItem("token");
+        setUser(null);
+        setIsAuthenticated(false);
+    };
+
     const indicator = async (indicadorData) => {
         try {
             const res = await indicatorRequest(indicadorData);
@@ -154,7 +160,7 @@ export const AutenProvider = ({ children }) => {
     }
 
     return (
-        <AuthenContext.Provider value={{ signup, signin, indicator, createGoal, getIndicadores, user, profile, updateProfile, isAuthenticated, errors, loading, submitErrors }}>
+        <AuthenContext.Provider value={{ signup, signin, signout, indicator, createGoal, getIndicadores, user, profile, updateProfile, isAuthenticated, errors, loading, submitErrors }}>
             {children}
         </AuthenContext.Provider>
     );
