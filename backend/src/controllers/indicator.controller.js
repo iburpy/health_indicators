@@ -46,7 +46,7 @@ const getIndicatorsByNumDoc = async (req, res) => {
         } else {
             res.setHeader('Content-Type', 'application/json');
             res.status(200).send(
-                JSON.stringify({ found: indicators.length, indicators },
+                JSON.stringify( indicators,
                     null, 2
                 ));
         }

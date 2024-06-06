@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useAuten } from "../context/AutenContext";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from '../components/Footer';
 import '../assets/fonts/fonts.css';
 
 function IndicadorForm() {
@@ -122,6 +123,7 @@ function IndicadorForm() {
                     </p>
                 </div>
             </div>
+            <Footer/>
         </>
     );
 }

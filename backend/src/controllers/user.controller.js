@@ -48,20 +48,12 @@ const register = async (req, res) => {
         res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' });
 
         const response = {
-            num_doc: newUser.num_doc,
-            nombre_completo: `${newUser.nombre} ${newUser.apellido}`,
-            genero: gender.genero,
+            numDoc: newUser.num_doc,
+            name: `${newUser.nombre} ${newUser.apellido}`,
+            gender: gender.genero,
             email: newUser.email,
-            fecha_de_nacimiento: newUser.fecha_de_nacimiento,
-            contacto_emergencia: {
-                num_doc: newUser.contacto_emergencia_num_doc,
-                nombre_completo: emergencyContact.nombre_completo,
-                email: emergencyContact.email,
-                telefono: emergencyContact.telefono,
-                genero: gender.nombre,
-                parentesco: emergencyContact.parentesco,
-                relacion: emergencyContact.relacion,
-            },
+            birthdate: newUser.fecha_de_nacimiento,
+            emergencyContact: emergencyContact,
             unidades_medida: unitsConfig
         };
 

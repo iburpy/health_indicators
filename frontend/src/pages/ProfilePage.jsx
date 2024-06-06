@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAuten } from "../context/AutenContext";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from '../components/Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faIdCard, faUser, faEnvelope, faBirthdayCake } from '@fortawesome/free-solid-svg-icons';
 
@@ -56,6 +57,7 @@ function Profiles() {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }

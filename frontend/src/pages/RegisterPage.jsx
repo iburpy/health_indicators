@@ -6,21 +6,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { MdAssignmentAdd } from "react-icons/md";
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import '../assets/fonts/fonts.css';
 
 function RegisterPage() {
   useEffect(() => { document.title = "Registro" });
 
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { signup, isAuthenticated, errors: registerErrors } = useAuten();
+  const { user, signup, isAuthenticated, errors: registerErrors } = useAuten();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-
-  useEffect(() => { if (isAuthenticated) navigate("/login") }, [isAuthenticated, navigate]);
+  console.log(user);
+  useEffect(() => { if (isAuthenticated) navigate(`/profile/${user.response.numDoc}`) }, [user, isAuthenticated, navigate]);
 
   const progress = (step / 3) * 100;
 
-  const onSubmit = handleSubmit(async (values) => { await signup(values) });
+  const onSubmit = handleSubmit(async (values) => { await signup(values); navigate(`/profile/${user.response.numDoc}`) });
 
   const [otherRelation, setRelation] = useState('');
   const [selectedRelation, setSelectedRelation] = useState('');
@@ -36,7 +37,7 @@ function RegisterPage() {
 
   return (
     
-    <div>
+    <>
       <Navbar/>
       <div id="bg" className="flex bg-slate-200 min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -500,7 +501,8 @@ function RegisterPage() {
           </Link>
         </p>
       </div>
-    </div>
+      <Footer/>
+    </>
   );
 }
 

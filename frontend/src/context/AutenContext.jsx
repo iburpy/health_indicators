@@ -2,7 +2,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useContext, useEffect } from "react";
 import axios from 'axios';
-import { registerRequest, loginRequest, indicatorRequest, profileRequest, updateProfileRequest, verifyTokenRequest, createGoalRequest } from "../api/auten";
+import { registerRequest, loginRequest, indicatorRequest, profileRequest, updateProfileRequest, verifyTokenRequest, createGoalRequest, indicatorUserRequest } from "../api/auten";
 import PropTypes from "prop-types";
 import Cookies from 'js-cookie';
 
@@ -16,6 +16,8 @@ export const useAuten = () => {
 
 export const AutenProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [indicator, setIndicator] = useState(null);
+    const [goal, setGoal] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -24,13 +26,14 @@ export const AutenProvider = ({ children }) => {
     const signup = async (user) => {
         try {
             const res = await registerRequest(user);
-            // console.log(res.data);
+            console.log(res.data);
             setUser(res.data);
             setIsAuthenticated(true);
+            localStorage.setItem("token", res.data.token);
             setErrors([]);
         } catch (error) {
             setErrors([error.response.data]);
-            // console.log(error.response);
+            console.log(error.response);
         }
     };
 
@@ -54,10 +57,11 @@ export const AutenProvider = ({ children }) => {
         setIsAuthenticated(false);
     };
 
-    const indicator = async (indicadorData) => {
+    const getAllIndicators = async (indicadorData) => {
         try {
             const res = await indicatorRequest(indicadorData);
             console.log(res.data);
+            setIndicator(res.data);
             setErrors([]);
         } catch (error) {
             setErrors([error.response.data]);
@@ -69,6 +73,7 @@ export const AutenProvider = ({ children }) => {
         try {
             const res = await createGoalRequest(objetivoData); 
             console.log(res.data);
+            setGoal(res.data);
             setErrors([]); 
         } catch (error) {
             setErrors([error.response.data]);
@@ -76,11 +81,12 @@ export const AutenProvider = ({ children }) => {
         }
     };
 
-    const getIndicadores = async (num_doc) => {
+    const getIndicators = async (user_num_doc) => {
         try {
-            const response = await axios.get(`/indicators?usuarios_num_doc=${num_doc}`);
-            console.log(response);
-            return response.data;
+            const response = await indicatorUserRequest(user_num_doc);
+            console.log(response.data);
+            setIndicator(response.data)
+            setErrors([]);
         } catch (error) {
             console.error("Error al obtener los indicadores:", error);
             return [];
@@ -153,7 +159,23 @@ export const AutenProvider = ({ children }) => {
     }
 
     return (
-        <AuthenContext.Provider value={{ signup, signin, signout, indicator, createGoal, getIndicadores, user, profile, updateProfile, isAuthenticated, errors, loading, submitErrors }}>
+        <AuthenContext.Provider value = {{    
+                                            signup,
+                                            signin,
+                                            signout,
+                                            getAllIndicators,
+                                            goal,
+                                            createGoal, 
+                                            getIndicators, 
+                                            user, 
+                                            profile, 
+                                            updateProfile,
+                                            indicator,
+                                            isAuthenticated, 
+                                            errors, 
+                                            loading, 
+                                            submitErrors 
+                                    }}>
             {children}
         </AuthenContext.Provider>
     );

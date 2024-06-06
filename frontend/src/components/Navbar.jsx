@@ -15,7 +15,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-gray-800 p-4">
+    <nav className="bg-gray-800 text-white py-6 p-4">
       <ul className="flex justify-between items-center">
         <li>
           <Link to="/" className="text-white">

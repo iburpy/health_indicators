@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAuten } from "../context/AutenContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,29 +6,33 @@ import Navbar from "../components/Navbar";
 import '../assets/fonts/fonts.css';
 
 function MetaSaludForm() {
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
-    const { user, isAuthenticated, submitErrors = [], getIndicatorsByNumDoc, createGoal } = useAuten();
-    const [indicadores, setIndicadores] = useState([]);
+    const { user, isAuthenticated, submitErrors = [], getIndicators, createGoal, indicators, setIndicators } = useAuten();
 
     useEffect(() => { document.title = "Registro de Metas de Salud"; }, []);
 
-    useEffect(() => {
-        if (!isAuthenticated) {
-            navigate('/login');
-        } else {
-            const fetchIndicadores = async () => {
-                try {
-                    const userIndicadores = await getIndicatorsByNumDoc(user.num_doc);
-                    setIndicadores(userIndicadores);
-                } catch (error) {
-                    console.error(error);
-                    setIndicadores([]);
-                }
-            };
-            fetchIndicadores();
-        }
-    }, [isAuthenticated, navigate, user, getIndicatorsByNumDoc, indicadores]);
+    console.log(user);
+
+useEffect(() => {
+    if (!isAuthenticated) {
+        navigate('/login');
+    } else {
+        const fetchIndicadores = async () => {
+            try {
+                const userIndicadores = await getIndicators(user.numDoc);
+                console.log(userIndicadores);
+                setIndicators(userIndicadores);
+            } catch (error) {
+                console.error(error);
+                setIndicators([]);
+            }
+        };
+        fetchIndicadores();
+        console.log(indicators);
+    }
+}, [isAuthenticated, navigate, user, getIndicators, indicators, setIndicators]);
+
 
     const onSubmit = async (data) => {
         const metaSaludData = {
@@ -93,8 +96,8 @@ function MetaSaludForm() {
                                     {...register("indicadores_id", { required: true, valueAsNumber: true })}
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     <option value="">Selecciona un indicador...</option>
-                                    {Array.isArray(indicadores) && indicadores.map((indicador) => (
-                                        <option key={indicador.id} value={indicador.id}>{indicador.nombre}</option>
+                                    {Array.isArray(indicators) && indicators.map((indicator) => (
+                                        <option key={indicator.id} value={indicator.id}>{indicators.nombre}</option>
                                     ))}
                                 </select>
                                 {errors.indicadores_id && (
@@ -116,23 +119,7 @@ function MetaSaludForm() {
                                     <span className="text-red-500 text-sm">{errors.fecha_cumplimiento.message}</span>
                                 )}
                             </div>
-
-                            <div className="mb-4">
-                                <label htmlFor="unidades_medida_id" className="block text-sm font-bold text-gray-700 mb-2">
-                                    Unidades de Medida
-                                </label>
-                                <input
-                                    type="number"
-                                    {...register("unidades_medida_id", { required: true })}
-                                    className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    placeholder="Unidades de Medida"
-                                />
-                                {errors.unidades_medida_id && (
-                                    <span className="text-red-500 text-sm">{errors.unidades_medida_id.message}</span>
-                                )}
-                            </div>
                         </div>
-
                         <div>
                             <button
                                 type="submit"
@@ -143,7 +130,7 @@ function MetaSaludForm() {
                         </div>
                     </form>
                     <p className="mt-2 text-center text-sm text-gray-600">¿Volver al perfil?&nbsp;
-                        <Link to={`/profile/${user?.num_doc}`} className="font-medium text-indigo-600 hover:text-indigo-500">
+                        <Link to={`/profile/${user?.numDoc}`} className="font-medium text-indigo-600 hover:text-indigo-500">
                             ¡Haz clic aquí!
                         </Link>
                     </p>

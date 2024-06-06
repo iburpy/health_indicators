@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useAuten } from "../context/AutenContext";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from '../components/Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import '../assets/fonts/fonts.css'
@@ -100,6 +101,7 @@ function LoginPage() {
           </p>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }
