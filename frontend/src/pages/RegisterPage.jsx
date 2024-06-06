@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { MdAssignmentAdd } from "react-icons/md";
-
+import Navbar from '../components/Navbar';
 import '../assets/fonts/fonts.css';
 
 function RegisterPage() {
@@ -35,7 +35,9 @@ function RegisterPage() {
   const prevStep = () => { if (step > 1) setStep(step - 1) };
 
   return (
+    
     <div>
+      <Navbar/>
       <div id="bg" className="flex bg-slate-200 min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           {/* Barra de Progreso del Formulario */}

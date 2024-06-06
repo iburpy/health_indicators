@@ -10,12 +10,7 @@ export const AuthenContext = createContext();
 
 export const useAuten = () => {
     const context = useContext(AuthenContext);
-    console.log(context)
-    if (!context) {
-        throw new Error('useAuten must be used within an AuthenProvider');
-       
-    }
-
+    if (!context)  throw new Error('useAuten must be used within an AuthenProvider');
     return context;
 };
 
@@ -29,13 +24,13 @@ export const AutenProvider = ({ children }) => {
     const signup = async (user) => {
         try {
             const res = await registerRequest(user);
-            console.log(res.data);
+            // console.log(res.data);
             setUser(res.data);
             setIsAuthenticated(true);
             setErrors([]);
         } catch (error) {
             setErrors([error.response.data]);
-            console.log(error.response);
+            // console.log(error.response);
         }
     };
 
@@ -45,14 +40,11 @@ export const AutenProvider = ({ children }) => {
             console.log(res.data);
             setUser(res.data);
             setIsAuthenticated(true);
-            localStorage.setItem("token",res.data.token);
+            localStorage.setItem("token", res.data.token);
             setErrors([]);
         } catch (error) {
-            if (Array.isArray(error.response.data)) {
-                setErrors(error.response.data);
-            } else {
-                setErrors([error.response.data]);
-            }
+            setErrors([error.response.data]);
+            console.log(error.response.data);
         }
     };
 
@@ -98,7 +90,7 @@ export const AutenProvider = ({ children }) => {
        if(user.num_doc){
         try {
             console.log({user})
-            const res = await profileRequest(user.num_doc); 
+            const res = await profileRequest(user.numDoc); 
             setUser(res.data);
         } catch (error) {
             console.log(error);
