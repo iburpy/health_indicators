@@ -14,7 +14,7 @@ function IndicadorForm() {
     } = useForm();
     
     const navigate = useNavigate();
-    const { user, isAuthenticated, submitErrors = [], indicator } = useAuten();
+    const { user, isAuthenticated, submitErrors = [], getAllIndicators } = useAuten();
 
     useEffect(() => { document.title = "Registro de Indicadores"; }, []);
 
@@ -22,9 +22,9 @@ function IndicadorForm() {
         const indicadorData = {
             ...data,
             fecha_hora_registro: new Date(),
-            usuarios_num_doc: user?.num_doc, 
+            usuarios_num_doc: user?.numDoc, 
         };
-        await indicator(indicadorData);
+        await getAllIndicators(indicadorData);
     };
 
     useEffect(() => {

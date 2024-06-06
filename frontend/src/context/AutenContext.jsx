@@ -84,8 +84,8 @@ export const AutenProvider = ({ children }) => {
     const getIndicators = async (user_num_doc) => {
         try {
             const response = await indicatorUserRequest(user_num_doc);
+            setIndicator(response.data);
             console.log(response.data);
-            setIndicator(response.data)
             setErrors([]);
         } catch (error) {
             console.error("Error al obtener los indicadores:", error);

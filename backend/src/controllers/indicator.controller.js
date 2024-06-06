@@ -1,4 +1,5 @@
 const { Indicador } = require("../model/models.js");
+const { TipoIndicador } = require("../model/models.js")
 
 const getIndicators = async (req, res) => {
     try {
@@ -45,10 +46,7 @@ const getIndicatorsByNumDoc = async (req, res) => {
             res.status(404).json({ error: 'Indicadores no encontrados para el número de documento proporcionado' });
         } else {
             res.setHeader('Content-Type', 'application/json');
-            res.status(200).send(
-                JSON.stringify( indicators,
-                    null, 2
-                ));
+            res.status(200).send(indicators);
         }
     } catch (error) {
         res.status(400).json({ error: error.message });

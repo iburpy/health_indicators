@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuten } from '../context/AutenContext';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -9,22 +9,22 @@ function IndicatorsPage() {
     const { user, isAuthenticated, getIndicators, indicator } = useAuten();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-
-    const fetchIndicators = useCallback(async () => {
-        setLoading(true);
-        await getIndicators(user.num_doc);
-        setLoading(false);
-    }, [getIndicators, user]);
+    console.log(user);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    } else {
+    const fetchIndicators = async () => {
+        setLoading(true);
+        await getIndicators(user.numDoc);
+        setLoading(false);
+    };
+    if (isAuthenticated) {
       fetchIndicators();
+      setLoading(false);
+    } else {
+      navigate('/login');
     }
-  }, [isAuthenticated, navigate, fetchIndicators]);
+  }, [isAuthenticated, navigate, getIndicators, user.numDoc]);
 
-  
 
   if (!isAuthenticated) {
     return <div>Redirigiendo al login...</div>;
@@ -46,8 +46,8 @@ function IndicatorsPage() {
                 {indicator.map((ind, index) => (
                   <li key={index} className="mb-4">
                     <p><strong>Nombre:</strong> {ind.nombre}</p>
-                    <p><strong>Descripción:</strong> {ind.descripcion}</p>
-                    <p><strong>Valor:</strong> {ind.valor}</p>
+                    <p><strong>Descripción:</strong> {ind.notas_adicionales}</p>
+                    <p><strong>Valor:</strong> {ind.valor_indicador}</p>
                     {/* Añade otros campos según sea necesario */}
                   </li>
                 ))}
