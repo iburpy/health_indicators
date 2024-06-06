@@ -79,6 +79,7 @@ export const AutenProvider = ({ children }) => {
     const getIndicadores = async (num_doc) => {
         try {
             const response = await axios.get(`/indicators?usuarios_num_doc=${num_doc}`);
+            console.log(response);
             return response.data;
         } catch (error) {
             console.error("Error al obtener los indicadores:", error);
@@ -89,7 +90,7 @@ export const AutenProvider = ({ children }) => {
     const profile = async () => {
        if(user.num_doc){
         try {
-            console.log({user})
+            console.log({user});
             const res = await profileRequest(user.numDoc); 
             setUser(res.data);
         } catch (error) {
@@ -121,8 +122,8 @@ export const AutenProvider = ({ children }) => {
     useEffect(() => {
         async function checkLogin() {
             const token = localStorage.getItem("token");
-            console.log("hola mundo");
-            console.log(token);
+            // console.log("hola mundo");
+            // console.log(token);
             if (!token) {
                 setIsAuthenticated(false);
                 setUser(null);
@@ -132,8 +133,8 @@ export const AutenProvider = ({ children }) => {
 
             try {
                 const res = await verifyTokenRequest(token);
-                console.log(res)
-                console.log(token)
+                console.log(res);
+                console.log(token);
                 setIsAuthenticated(true);
                 setUser(res.data);
             } catch (error) {
@@ -144,7 +145,7 @@ export const AutenProvider = ({ children }) => {
                 setLoading(false);
             }
         }
-        checkLogin().then(data => console.log(data));
+        checkLogin();
     }, []);
 
     if (loading) {
