@@ -24,14 +24,14 @@ function Contact() {
 
     return (
         <>
-            <section className="py-12 bg-gray-100">
+            <section className="py-12 bg-gray-300">
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Contáctanos</h2>
                     <div className="max-w-lg mx-auto">
                     <p className="text-center text-gray-600 mb-4">
                         Por favor, déjanos tu nombre, correo electrónico, asunto y tu mensaje. Estaremos encantados de ayudarte.
                     </p>
-                        <form className="bg-white p-6 rounded-lg shadow-md" onSubmit={handleSubmit}>
+                        <form className="bg-gray-200 p-6 rounded-lg shadow-md" onSubmit={handleSubmit}>
                             <div className="mb-4">
                                 <label className="block text-gray-700 font-bold mb-2" htmlFor="name">Nombre</label>
                                 <input
