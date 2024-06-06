@@ -12,7 +12,7 @@ function HomeHeader() {
                     <h1 className="text-4xl md:text-5xl font-bold text-white">Bienvenido a MetaSalud</h1>
                     <p className="mt-4 text-base md:text-lg text-gray-100">Tu plataforma para registrar y monitorear tus indicadores de salud</p>
                     {isAuthenticated ? (
-                        <Link to={`/profile/${user.found.doc}`} className="rounded-lg inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-6 transition transform duration-300 ease-in-out hover:scale-105">
+                        <Link to={`/profile/${user.numDoc}`} className="rounded-lg inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-6 transition transform duration-300 ease-in-out hover:scale-105">
                             Volver al perfil
                         </Link>
                     ) : (

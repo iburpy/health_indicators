@@ -114,12 +114,10 @@ const verifyToken = async (req, res) => {
       if (!UserFound) return res.status(401).json({message:"No Autorizado"});
   
       res.status(200).send(JSON.stringify({ 
-                found: {
-                    doc: UserFound.num_doc,
+                    numDoc: UserFound.num_doc,
                     name: `${UserFound.nombre} ${UserFound.apellido}`,
                     email: UserFound.email,
                     birthdate: UserFound.fecha_de_nacimiento,
-                } 
             }, null, 2))
     });
 };
@@ -145,15 +143,13 @@ const getProfile = async (req, res) => {
             res.setHeader('Content-Type', 'application/json');
             console.log(user);
             res.status(200).send(JSON.stringify({ 
-                found: {
-                    doc: user.num_doc,
+                    numDoc: user.num_doc,
                     name: `${user.nombre} ${user.apellido}`,
                     email: user.email,
                     birthdate: user.fecha_de_nacimiento,
                     gender: genero.nombre,
                     emergencyContact: { contacto_emergencia },
                     unitsConfig: { unidades_medida }
-                } 
             }, null, 2))
         }
     } catch (error) {
